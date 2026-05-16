@@ -24,17 +24,6 @@ export default function Sobre() {
           </div>
 
           <div>
-            <div className="section-title">Instituição</div>
-            <div className="inst-card">
-              <div className="inst-icon">🎓</div>
-              <div>
-                <div className="inst-name">Universidade Federal da Paraíba</div>
-                <div className="inst-sub">Departamento de Sistemas e Computação · DSC/UFPB</div>
-              </div>
-            </div>
-          </div>
-
-          <div>
             <div className="section-title">Como funciona</div>
             <div className="sobre-block">
               <p>Cada laboratório é empacotado como um ambiente Docker. O professor define previamente as ferramentas, dependências e exercícios que farão parte da atividade, e essa configuração fica descrita nos arquivos do laboratório.</p>
@@ -67,6 +56,29 @@ export default function Sobre() {
                 <div className="flow-prereq">
                   <strong>Pré-requisito único</strong>
                   <span>Docker instalado · grátis · Win · macOS · Linux</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div className="section-title">Instituição</div>
+            <div className="inst-card">
+              <div className="inst-content">
+                <div className="inst-eyebrow">Projeto vinculado à</div>
+                <div className="inst-name">Universidade Federal da Paraíba</div>
+                <div className="inst-sub">Departamento de Ciências Exatas</div>
+                <div className="inst-sub">Curso de Sistemas de Informação</div>
+              </div>
+              <div className="inst-logos" aria-label="Marcas institucionais">
+                <div className="inst-logo-box">
+                  <img className="inst-logo" src="/brands/ufpb.png" alt="Logo da Universidade Federal da Paraíba" />
+                </div>
+                <div className="inst-logo-box">
+                  <img className="inst-logo inst-logo-dcx" src="/brands/dcx.png" alt="Logo do Departamento de Ciências Exatas" />
+                </div>
+                <div className="inst-logo-box">
+                  <img className="inst-logo inst-logo-si" src="/brands/si.png" alt="Logo do curso de Sistemas de Informação" />
                 </div>
               </div>
             </div>
