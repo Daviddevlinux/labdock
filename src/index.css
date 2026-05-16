@@ -16,6 +16,17 @@
   --radius-lg: 12px;
 }
 
+html[data-theme="dark"] {
+  --text-primary: #f0f0f0;
+  --text-secondary: #aaa;
+  --text-muted: #666;
+  --border: #2a2a2a;
+  --bg: #111;
+  --bg-secondary: #1a1a1a;
+  --azul-claro: #0C2340;
+  --azul-escuro: #90C4F0;
+}
+
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text-primary); background: var(--bg); line-height: 1.6; }
 
 a { color: var(--azul); text-decoration: none; }
@@ -24,14 +35,16 @@ a:hover { text-decoration: underline; }
 .container { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
 
 /* NAVBAR */
-.navbar { display: flex; align-items: center; justify-content: space-between; height: 56px; border-bottom: 0.5px solid var(--border); padding: 0 1.5rem; position: sticky; top: 0; background: #fff; z-index: 100; }
+.navbar { display: flex; align-items: center; justify-content: space-between; height: 56px; border-bottom: 0.5px solid var(--border); padding: 0 1.5rem; position: sticky; top: 0; background: var(--bg); z-index: 100; }
 .navbar-logo { font-size: 16px; font-weight: 600; color: var(--text-primary); text-decoration: none; }
 .navbar-logo span { color: var(--azul); }
 .navbar-links { display: flex; gap: 1.5rem; align-items: center; }
 .navbar-links a { font-size: 14px; color: var(--text-secondary); text-decoration: none; }
 .navbar-links a:hover, .navbar-links a.active { color: var(--text-primary); }
-.navbar-btn { font-size: 13px; background: var(--azul); color: #fff; border: none; padding: 7px 16px; border-radius: var(--radius); cursor: pointer; text-decoration: none; }
-.navbar-btn:hover { background: var(--azul-escuro); text-decoration: none; }
+.theme-toggle { background: transparent; border: none; cursor: pointer; font-size: 18px; }
+.navbar-btn { font-size: 13px; background: var(--azul); color: #fff !important; border: none; padding: 7px 16px; border-radius: var(--radius); cursor: pointer; text-decoration: none; }
+.navbar-btn:hover, .navbar-btn:visited, .navbar-btn:active { color: #fff !important; text-decoration: none; }
+.navbar-btn:hover { background: var(--azul-escuro); }
 
 /* HERO */
 .hero { padding: 4rem 0 3rem; border-bottom: 0.5px solid var(--border); }
