@@ -27,6 +27,11 @@ html[data-theme="dark"] {
   --azul-escuro: #90C4F0;
 }
 
+html[data-theme="dark"] .flow-step-professor { background: rgba(122, 92, 255, 0.12); border-color: rgba(165, 140, 255, 0.45); }
+html[data-theme="dark"] .flow-step-platform { background: rgba(74, 144, 226, 0.12); border-color: rgba(111, 168, 255, 0.4); }
+html[data-theme="dark"] .flow-step-student { background: rgba(39, 174, 96, 0.12); border-color: rgba(110, 214, 160, 0.35); }
+html[data-theme="dark"] .flow-step-docker { background: rgba(241, 196, 15, 0.1); border-color: rgba(241, 196, 15, 0.35); }
+
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text-primary); background: var(--bg); line-height: 1.6; }
 
 a { color: var(--azul); text-decoration: none; }
@@ -87,6 +92,18 @@ a:hover { text-decoration: underline; }
 .sobre-block p + p { margin-top: .875rem; }
 .quote { border-left: 3px solid var(--azul); padding: .875rem 1.25rem; margin: 1.25rem 0; background: var(--azul-claro); border-radius: 0 var(--radius) var(--radius) 0; }
 .quote p { font-size: 14px; color: var(--azul-escuro); line-height: 1.6; font-style: italic; }
+.flow-diagram { display: flex; flex-direction: column; align-items: center; margin-top: 1.5rem; }
+.flow-step { width: min(100%, 420px); padding: 1rem 1.25rem; border-radius: 16px; border: 1px solid var(--border); text-align: center; }
+.flow-step strong { display: block; font-size: 15px; color: var(--text-primary); }
+.flow-step span { display: block; font-size: 13px; color: var(--text-secondary); margin-top: .2rem; }
+.flow-step-professor { background: #f1ecff; border-color: #c6b8ff; }
+.flow-step-platform { background: #e9f3ff; border-color: #b6d2f5; }
+.flow-step-student { background: #e7f6ef; border-color: #a8d9c8; }
+.flow-step-docker { background: #fff3dd; border-color: #e8c48a; }
+.flow-arrow { font-size: 28px; line-height: 1; color: var(--text-muted); margin: .2rem 0; }
+.flow-prereq { width: min(100%, 420px); margin-top: 1rem; padding: .9rem 1.25rem; border-radius: 14px; border: 1px dashed var(--border); text-align: center; background: var(--bg); }
+.flow-prereq strong { display: block; font-size: 14px; color: var(--text-primary); }
+.flow-prereq span { display: block; font-size: 13px; color: var(--text-secondary); margin-top: .15rem; }
 .inst-card { display: flex; align-items: center; gap: 14px; padding: 1.25rem; border: 0.5px solid var(--border); border-radius: var(--radius-lg); }
 .inst-icon { width: 44px; height: 44px; border-radius: var(--radius); background: var(--azul-claro); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
 .inst-name { font-size: 15px; font-weight: 600; }
@@ -158,5 +175,7 @@ a:hover { text-decoration: underline; }
 .contrib-button svg { width: 18px; height: 18px; }
 
 @media (max-width: 780px) {
+  .flow-step,
+  .flow-prereq { width: 100%; }
   .social-strip { grid-template-columns: 1fr; }
 }

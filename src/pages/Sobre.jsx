@@ -14,12 +14,12 @@ export default function Sobre() {
           <div>
             <div className="section-title">A motivação</div>
             <div className="sobre-block">
-              <p>Quem já cursou uma disciplina prática de computação sabe como é: a aula começa, o professor passa o exercício, e metade da turma trava antes mesmo de começar. Java não funciona na versão certa, uma biblioteca está faltando, o Linux do colega se comporta diferente do seu, a porta está ocupada.</p>
-              <p>Esse tempo perdido em configuração de ambiente é um problema real e recorrente. Não é culpa do professor nem do aluno — é estrutural. Cada máquina é diferente, e garantir que todos partam do mesmo ponto é genuinamente difícil.</p>
+              <p>Em disciplinas como Sistemas Operacionais, Redes de Computadores e Avaliação de Desempenho de Sistemas, nem sempre apenas acompanhar a explicação do professor é suficiente para consolidar o conteúdo. Em muitos casos, o entendimento acontece de verdade quando o aluno consegue testar, observar e repetir aquele contexto na prática.</p>
+              <p>Pensando nisso, e em conjunto com os professores dessas disciplinas, foram criados laboratórios que reproduzem cenários próximos aos vistos em sala de aula. A proposta é sair do modelo em que o aluno apenas observa uma demonstração na máquina do professor e avançar para uma experiência em que ele também pode executar o laboratório por conta própria.</p>
               <div className="quote">
-                <p>"O objetivo do LabDock é que o único comando que o aluno precise rodar antes de estudar seja: docker compose up."</p>
+                <p>"A ideia do LabDock é transformar a aula em prática: o aluno vê, roda, testa e aprende no próprio ambiente."</p>
               </div>
-              <p>O projeto nasceu como Trabalho de Conclusão de Curso no Departamento de Sistemas e Computação da UFPB, com o objetivo de criar uma solução simples, gratuita e reutilizável para distribuição de laboratórios acadêmicos padronizados.</p>
+              <p>Com o LabDock, esses ambientes podem ser executados tanto no laboratório da universidade quanto em casa, na máquina do próprio estudante. O foco é dar autonomia para praticar mais, revisar melhor os assuntos e tornar o aprendizado menos passivo e mais aplicado.</p>
             </div>
           </div>
 
@@ -37,7 +37,38 @@ export default function Sobre() {
           <div>
             <div className="section-title">Como funciona</div>
             <div className="sobre-block">
-              <p>Cada laboratório é empacotado como um ambiente Docker. O professor define uma vez quais ferramentas e exercícios compõem o lab. O aluno baixa um arquivo <code>.zip</code> com tudo dentro, roda <code>docker compose up</code> e o ambiente está pronto — igual em qualquer máquina.</p>
+              <p>Cada laboratório é empacotado como um ambiente Docker. O professor define previamente as ferramentas, dependências e exercícios que farão parte da atividade, e essa configuração fica descrita nos arquivos do laboratório.</p>
+              <p>Com isso, o aluno não precisa reproduzir manualmente o ambiente na própria máquina. Ao baixar o arquivo <code>.zip</code> e executar <code>docker compose up</code>, ele inicia o mesmo conjunto de serviços e configurações preparado pelo professor. Como o laboratório roda em contêineres isolados e reproduzíveis, o comportamento tende a ser o mesmo em diferentes máquinas, seja no laboratório da universidade ou em casa.</p>
+
+              <div className="flow-diagram" aria-label="Fluxo de funcionamento do LabDock">
+                <div className="flow-step flow-step-professor">
+                  <strong>Professor</strong>
+                  <span>Define ferramentas e exercícios do lab</span>
+                </div>
+                <div className="flow-arrow" aria-hidden="true">↓</div>
+
+                <div className="flow-step flow-step-platform">
+                  <strong>Plataforma LabDock</strong>
+                  <span>Lab publicado e disponível para download</span>
+                </div>
+                <div className="flow-arrow" aria-hidden="true">↓</div>
+
+                <div className="flow-step flow-step-student">
+                  <strong>Aluno</strong>
+                  <span>Baixa o .zip com 1 clique no site</span>
+                </div>
+                <div className="flow-arrow" aria-hidden="true">↓</div>
+
+                <div className="flow-step flow-step-docker">
+                  <strong>docker compose up</strong>
+                  <span>Ambiente pronto em qualquer máquina</span>
+                </div>
+
+                <div className="flow-prereq">
+                  <strong>Pré-requisito único</strong>
+                  <span>Docker instalado · grátis · Win · macOS · Linux</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
