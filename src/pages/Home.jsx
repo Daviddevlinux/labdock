@@ -11,8 +11,8 @@ export default function Home() {
       <div className="container">
         <section className="hero">
           <div className="hero-badge">🎓 UFPB · DSC</div>
-          <h1>Laboratórios práticos prontos para rodar</h1>
-          <p>Plataforma do Departamento de Sistemas e Computação para distribuição de ambientes acadêmicos padronizados. Sem configuração, sem conflito de versões.</p>
+          <h1>LabDock: laboratórios práticos de disciplinas de forma fácil e rápida</h1>
+          <p>Uma plataforma centralizada de laboratórios usando Docker para as disciplinas de Redes de Computadores, Sistemas Operacionais e Avaliação de Desempenho de Sistemas do curso de Sistemas de Informação e Ciência da Computação, Campus IV - UFPB.</p>
           <div className="hero-actions">
             <Link to="/laboratorios" className="btn-primary">Ver laboratórios</Link>
             <Link to="/sobre" className="btn-secondary">Como funciona</Link>
