@@ -9,9 +9,10 @@ import './index.css'
 
 export default function App() {
   useTheme()
+  const basename = import.meta.env.BASE_URL.replace(/\/$/, '')
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sobre" element={<Sobre />} />
