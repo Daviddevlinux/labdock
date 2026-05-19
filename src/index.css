@@ -54,6 +54,8 @@ a:hover { text-decoration: underline; }
 /* HERO */
 .hero { padding: 4rem 0 3rem; border-bottom: 0.5px solid var(--border); }
 .hero-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--azul); background: var(--azul-claro); padding: 4px 12px; border-radius: 99px; margin-bottom: 1.25rem; }
+.hero-badge__dot { width: 8px; height: 8px; border-radius: 999px; background: currentColor; flex: 0 0 auto; }
+.hero-badge__sep { opacity: .5; }
 .hero h1 { font-size: 32px; font-weight: 600; line-height: 1.25; margin-bottom: 1rem; max-width: 520px; }
 .hero p { font-size: 15px; color: var(--text-secondary); max-width: 480px; margin-bottom: 1.75rem; line-height: 1.7; }
 .hero-actions { display: flex; gap: 10px; }
