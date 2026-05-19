@@ -334,9 +334,14 @@ a:hover { text-decoration: underline; }
   .hero { padding: 3rem 0 2.5rem; }
   .hero h1 { font-size: 28px; max-width: none; }
   .hero p { max-width: none; }
-  .stats { grid-template-columns: 1fr; }
-  .stat { border-right: none; border-bottom: 0.5px solid var(--border); }
-  .stat:last-child { border-bottom: none; }
+  .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stat {
+    padding: 1.25rem .85rem;
+    border-right: 0.5px solid var(--border);
+    border-bottom: none;
+  }
+  .stat-n { font-size: 22px; }
+  .stat-l { font-size: 12px; }
   .info-grid { grid-template-columns: 1fr; }
   .flow-step,
   .flow-prereq { width: 100%; }
@@ -360,6 +365,9 @@ a:hover { text-decoration: underline; }
   .detail-title,
   .contrib-card h2 { font-size: 22px; }
   .hero h1 { font-size: 24px; line-height: 1.2; }
+  .stat { padding: 1rem .65rem; }
+  .stat-n { font-size: 18px; }
+  .stat-l { font-size: 11px; }
   .hero-actions { flex-direction: column; }
   .btn-primary,
   .btn-secondary,
@@ -398,13 +406,15 @@ a:hover { text-decoration: underline; }
     letter-spacing: .06em;
   }
   .hero h1 { font-size: 21px; }
+  .stat { padding: .9rem .5rem; }
+  .stat-n { font-size: 17px; }
+  .stat-l { font-size: 10px; }
   .hero p,
   .page-hero p,
   .detail-desc,
   .contrib-card p,
   .sobre-block,
   .info-card p { font-size: 13px; }
-  .stat,
   .info-card { padding: 1rem; }
 }
 
