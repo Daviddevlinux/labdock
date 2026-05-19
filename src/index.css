@@ -247,9 +247,29 @@ a:hover { text-decoration: underline; }
 .contrib-button svg { width: 18px; height: 18px; }
 
 @media (max-width: 780px) {
+  .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .stat {
+    padding: 1.25rem .85rem;
+    border-right: 0.5px solid var(--border);
+    border-bottom: none;
+  }
+  .stat-n { font-size: 22px; }
+  .stat-l { font-size: 12px; }
   .flow-step,
   .flow-prereq { width: 100%; }
   .social-strip { grid-template-columns: 1fr; }
   .inst-card { grid-template-columns: 1fr; }
   .inst-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .stat { padding: 1rem .65rem; }
+  .stat-n { font-size: 18px; }
+  .stat-l { font-size: 11px; }
+}
+
+@media (max-width: 380px) {
+  .stat { padding: .9rem .5rem; }
+  .stat-n { font-size: 17px; }
+  .stat-l { font-size: 10px; }
 }
