@@ -1,6 +1,8 @@
 import Navbar from '../components/Navbar'
 
 export default function Sobre() {
+  const baseUrl = import.meta.env.BASE_URL
+
   return (
     <>
       <Navbar />
@@ -72,13 +74,13 @@ export default function Sobre() {
               </div>
               <div className="inst-logos" aria-label="Marcas institucionais">
                 <div className="inst-logo-box">
-                  <img className="inst-logo" src="/brands/ufpb.png" alt="Logo da Universidade Federal da Paraíba" />
+                  <img className="inst-logo" src={`${baseUrl}brands/ufpb.png`} alt="Logo da Universidade Federal da Paraíba" />
                 </div>
                 <div className="inst-logo-box">
-                  <img className="inst-logo inst-logo-dcx" src="/brands/dcx.png" alt="Logo do Departamento de Ciências Exatas" />
+                  <img className="inst-logo inst-logo-dcx" src={`${baseUrl}brands/dcx.png`} alt="Logo do Departamento de Ciências Exatas" />
                 </div>
                 <div className="inst-logo-box">
-                  <img className="inst-logo inst-logo-si" src="/brands/si.png" alt="Logo do curso de Sistemas de Informação" />
+                  <img className="inst-logo inst-logo-si" src={`${baseUrl}brands/si.png`} alt="Logo do curso de Sistemas de Informação" />
                 </div>
               </div>
             </div>
