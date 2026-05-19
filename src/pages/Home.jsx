@@ -10,7 +10,12 @@ export default function Home() {
       <Navbar />
       <div className="container">
         <section className="hero">
-          <div className="hero-badge">🎓 UFPB · DSC</div>
+          <div className="hero-badge" aria-label="Projeto acadêmico vinculado à UFPB Campus IV">
+            <span className="hero-badge__dot" aria-hidden="true" />
+            <span>Projeto acadêmico</span>
+            <span className="hero-badge__sep" aria-hidden="true">•</span>
+            <span>UFPB Campus IV</span>
+          </div>
           <h1>LabDock: laboratórios práticos de disciplinas de forma fácil e rápida</h1>
           <p>Uma plataforma centralizada de laboratórios usando Docker para as disciplinas de Redes de Computadores, Sistemas Operacionais e Avaliação de Desempenho de Sistemas do curso de Sistemas de Informação e Ciência da Computação, Campus IV - UFPB.</p>
           <div className="hero-actions">
