@@ -12,7 +12,14 @@
           "descricao": "Neste laboratório você vai interagir diretamente com o kernel Linux para entender como processos são criados, gerenciados e encerrados. Usando ferramentas de monitoramento em tempo real, é possível observar o comportamento do sistema sob diferentes condições de carga.",
           "nivel": "Iniciante",
           "duracao": "90 min",
-          "ferramentas": ["Ubuntu 24.04", "htop", "bash", "vim", "stress-ng", "procps"],
+          "ferramentas": [
+            "Ubuntu 24.04",
+            "htop",
+            "bash",
+            "vim",
+            "stress-ng",
+            "procps"
+          ],
           "objetivos": [
             "Entender como o Linux gerencia e prioriza processos em execução",
             "Monitorar consumo de CPU e memória com htop em tempo real",
@@ -25,8 +32,8 @@
             "iniciais": "NP"
           },
           "download": {
-            "arquivo": "lab-so-processos.zip",
-            "url": "#"
+            "arquivo": "lab-01.zip",
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-so-lab01/lab-01.zip"
           }
         }
       ]
@@ -43,7 +50,13 @@
           "descricao": "Dois containers (cliente e servidor) são iniciados na mesma rede virtual Docker. O aluno pode observar o tráfego, testar conexões TCP e simular diferentes cenários de comunicação entre processos em rede.",
           "nivel": "Intermediário",
           "duracao": "90 min",
-          "ferramentas": ["Python 3", "netcat", "curl", "tcpdump", "Ubuntu 24.04"],
+          "ferramentas": [
+            "Python 3",
+            "netcat",
+            "curl",
+            "tcpdump",
+            "Ubuntu 24.04"
+          ],
           "objetivos": [
             "Estabelecer uma conexão TCP entre cliente e servidor",
             "Capturar tráfego de rede com tcpdump e identificar o handshake",
@@ -74,7 +87,13 @@
           "descricao": "O aluno executa benchmarks reais de CPU e memória, coleta métricas com ferramentas profissionais e aprende a interpretar os resultados para identificar gargalos de desempenho em sistemas computacionais.",
           "nivel": "Intermediário",
           "duracao": "120 min",
-          "ferramentas": ["Ubuntu 24.04", "stress-ng", "Apache Bench", "htop", "sysbench"],
+          "ferramentas": [
+            "Ubuntu 24.04",
+            "stress-ng",
+            "Apache Bench",
+            "htop",
+            "sysbench"
+          ],
           "objetivos": [
             "Executar benchmark de CPU e registrar throughput em diferentes cargas",
             "Medir tempo de execução com e sem carga no sistema",
