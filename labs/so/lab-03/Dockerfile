@@ -1,0 +1,24 @@
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    htop \
+    procps \
+    stress-ng \
+    bash \
+    vim \
+    nano \
+    curl \
+    util-linux \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /lab
+
+COPY scripts/ ./scripts/
+COPY README.md .
+
+RUN chmod +x ./scripts/*.sh
+
+CMD ["/bin/bash"]
