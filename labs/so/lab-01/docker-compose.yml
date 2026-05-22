@@ -4,5 +4,3 @@ services:
     container_name: so-lab-01
     stdin_open: true
     tty: true
-    volumes:
-      - ./resultados:/lab/resultados

@@ -7,5 +7,3 @@ services:
     cap_add:
       - SYS_NICE
     cpuset: "0"
-    volumes:
-      - ./resultados:/lab/resultados
