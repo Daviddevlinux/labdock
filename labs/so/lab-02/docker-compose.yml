@@ -1,0 +1,8 @@
+services:
+  so-lab-02:
+    build: .
+    container_name: so-lab-02
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./resultados:/lab/resultados
