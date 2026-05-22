@@ -35,6 +35,67 @@
             "arquivo": "lab-01.zip",
             "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-so-lab01/lab-01.zip"
           }
+        },
+        {
+          "slug": "lab-02-arquivos",
+          "nome": "Lab 02 — Sistema de Arquivos e Permissões",
+          "objetivo": "Explore a estrutura do sistema de arquivos Linux e entenda como o sistema operacional controla o acesso de usuários a arquivos e diretórios.",
+          "descricao": "Neste laboratório você vai navegar pela estrutura de diretórios do Linux, criar arquivos e diretórios, e aprender a controlar permissões de acesso usando chmod e chown. Também será possível monitorar o uso de disco com ferramentas nativas do sistema.",
+          "nivel": "Iniciante",
+          "duracao": "90 min",
+          "ferramentas": [
+            "Ubuntu 24.04",
+            "bash",
+            "vim",
+            "nano",
+            "tree",
+            "coreutils"
+          ],
+          "objetivos": [
+            "Explorar a estrutura de diretórios do Linux",
+            "Criar e manipular arquivos e diretórios",
+            "Entender e modificar permissões com chmod",
+            "Verificar uso de disco com df e du"
+          ],
+          "professor": {
+            "nome": "Prof. Nome do Professor",
+            "departamento": "Departamento de Sistemas e Computação · UFPB",
+            "iniciais": "NP"
+          },
+          "download": {
+            "arquivo": "lab-02.zip",
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-so-lab02/lab-02.zip"
+          }
+        },
+        {
+          "slug": "lab-03-escalonamento",
+          "nome": "Lab 03 — Escalonamento e Prioridade de Processos",
+          "objetivo": "Entenda como o Linux decide qual processo utiliza o processador e aprenda a controlar a prioridade de processos com nice e renice.",
+          "descricao": "Neste laboratório você vai observar na prática como o escalonador do Linux distribui o tempo de CPU entre processos com diferentes prioridades. O container é configurado com apenas 1 núcleo para que a disputa entre processos seja claramente visível no htop.",
+          "nivel": "Intermediário",
+          "duracao": "90 min",
+          "ferramentas": [
+            "Ubuntu 24.04",
+            "htop",
+            "stress-ng",
+            "procps",
+            "bash"
+          ],
+          "objetivos": [
+            "Entender o conceito de escalonamento de processos",
+            "Iniciar processos com prioridades diferentes usando nice",
+            "Alterar a prioridade de processos em execução com renice",
+            "Observar o impacto da prioridade no uso de CPU com htop"
+          ],
+          "professor": {
+            "nome": "Prof. Nome do Professor",
+            "departamento": "Departamento de Sistemas e Computação · UFPB",
+            "iniciais": "NP"
+          },
+          "download": {
+            "arquivo": "lab-03.zip",
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-so-lab03/lab-03.zip"
+          }
         }
       ]
     },
