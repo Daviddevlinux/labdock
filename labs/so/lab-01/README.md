@@ -16,12 +16,7 @@ docker compose up -d
 
 Agora entre dentro do container para começar os exercícios. É como "entrar" em outra máquina Linux:
 ```bash
-docker compose exec so-lab-01 bash
-```
-
-Ao entrar no container, rode o script de boas-vindas:
-```bash
-bash scripts/setup.sh
+docker compose exec so-lab-01 bash --login
 ```
 
 ---

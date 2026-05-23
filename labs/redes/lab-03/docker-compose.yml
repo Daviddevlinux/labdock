@@ -1,0 +1,59 @@
+services:
+  roteador:
+    build: .
+    container_name: redes-roteador
+    volumes:
+      - ./scripts/setup.sh:/etc/profile.d/setup.sh
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.ip_forward=1
+    networks:
+      rede-a:
+        ipv4_address: 192.168.1.254
+      rede-b:
+        ipv4_address: 192.168.2.254
+    stdin_open: true
+    tty: true
+    command: ["/bin/bash", "--login"]
+
+  host-a:
+    build: .
+    container_name: redes-host-a
+    volumes:
+      - ./scripts/setup.sh:/etc/profile.d/setup.sh
+    cap_add:
+      - NET_ADMIN
+    networks:
+      rede-a:
+        ipv4_address: 192.168.1.2
+    stdin_open: true
+    tty: true
+    command: ["/bin/bash", "--login"]
+
+  host-b:
+    build: .
+    container_name: redes-host-b
+    volumes:
+      - ./scripts/setup.sh:/etc/profile.d/setup.sh
+    cap_add:
+      - NET_ADMIN
+    networks:
+      rede-b:
+        ipv4_address: 192.168.2.2
+    stdin_open: true
+    tty: true
+    command: ["/bin/bash", "--login"]
+
+networks:
+  rede-a:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+
+  rede-b:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24

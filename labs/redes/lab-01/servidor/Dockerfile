@@ -3,22 +3,20 @@ FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
-    htop \
-    procps \
-    stress-ng \
-    bash \
+    python3 \
+    python3-pip \
+    netcat-openbsd \
+    tcpdump \
+    iproute2 \
+    iputils-ping \
+    curl \
     vim \
     nano \
-    curl \
-    util-linux \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /lab
 
-COPY scripts/ ./scripts/
-COPY README.md .
+COPY server.py .
 
-RUN chmod +x ./scripts/*.sh
-
-CMD ["/bin/bash", "--login"]
+CMD ["python3", "server.py"]

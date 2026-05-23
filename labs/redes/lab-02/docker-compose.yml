@@ -1,0 +1,12 @@
+services:
+  analisador:
+    build: .
+    container_name: redes-analisador
+    volumes:
+      - ./scripts/setup.sh:/etc/profile.d/setup.sh
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    stdin_open: true
+    tty: true
+    command: ["/bin/bash", "--login"]

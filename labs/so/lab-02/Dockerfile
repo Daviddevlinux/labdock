@@ -23,4 +23,4 @@ COPY README.md .
 
 RUN chmod +x ./scripts/*.sh
 
-CMD ["/bin/bash"]
+CMD ["/bin/bash", "--login"]
