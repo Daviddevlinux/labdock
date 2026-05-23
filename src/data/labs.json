@@ -26,7 +26,7 @@
           },
           "download": {
             "arquivo": "lab-01.zip",
-            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-so-lab01/lab-01.zip"
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-so-lab01/so-lab-01.zip"
           }
         },
         {
@@ -50,7 +50,7 @@
           },
           "download": {
             "arquivo": "lab-02.zip",
-            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-so-lab02/lab-02.zip"
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-so-lab02/so-lab-02.zip"
           }
         },
         {
@@ -74,7 +74,7 @@
           },
           "download": {
             "arquivo": "lab-03.zip",
-            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-so-lab03/lab-03.zip"
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-so-lab03/so-lab-03.zip"
           }
         }
       ]
