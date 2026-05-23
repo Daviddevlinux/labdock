@@ -1,0 +1,23 @@
+services:
+  servidor:
+    build: ./servidor
+    container_name: redes-servidor
+    networks:
+      - lab-net
+
+  cliente:
+    build: ./cliente
+    container_name: redes-cliente
+    volumes:
+      - ./scripts/setup.sh:/etc/profile.d/setup.sh
+    networks:
+      - lab-net
+    depends_on:
+      - servidor
+    stdin_open: true
+    tty: true
+    command: ["/bin/bash", "--login"]
+
+networks:
+  lab-net:
+    driver: bridge
