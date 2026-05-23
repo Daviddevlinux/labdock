@@ -2,5 +2,8 @@ services:
   so-lab-02:
     build: .
     container_name: so-lab-02
+    volumes:
+      - ./scripts/setup.sh:/etc/profile.d/setup.sh
     stdin_open: true
     tty: true
+    command: ["/bin/bash", "--login"]

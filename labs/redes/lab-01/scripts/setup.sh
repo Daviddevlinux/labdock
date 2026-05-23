@@ -2,8 +2,8 @@
 
 echo ""
 echo "╔══════════════════════════════════════════════════════════╗"
-echo "║             LABDOCK — Redes de Computadores              ║"
-echo "║              Lab 01 — Cliente-Servidor TCP               ║"
+echo "║              LABDOCK — Redes de Computadores             ║"
+echo "║               Lab 01 — Cliente-Servidor TCP              ║"
 echo "╚══════════════════════════════════════════════════════════╝"
 echo ""
 echo "  Bem-vindo(a) ao ambiente de laboratório!"

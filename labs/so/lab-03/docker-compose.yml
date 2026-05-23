@@ -2,8 +2,11 @@ services:
   so-lab-03:
     build: .
     container_name: so-lab-03
+    volumes:
+      - ./scripts/setup.sh:/etc/profile.d/setup.sh
     stdin_open: true
     tty: true
     cap_add:
       - SYS_NICE
     cpuset: "0"
+    command: ["/bin/bash", "--login"]
