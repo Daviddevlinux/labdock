@@ -6,7 +6,6 @@ Entender como o sistema operacional Linux decide qual processo deve utilizar o p
 ## Pré-requisitos
 - Docker instalado na máquina
 - Docker Compose instalado
-- Ter concluído os Labs 01 e 02 (recomendado)
 
 ## Como iniciar o laboratório
 
@@ -17,12 +16,7 @@ docker compose up -d
 
 Entre no container:
 ```bash
-docker compose exec so-lab-03 bash
-```
-
-Rode o script de boas-vindas:
-```bash
-bash scripts/setup.sh
+docker compose exec so-lab-03 bash --login
 ```
 
 ---

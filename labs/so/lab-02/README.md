@@ -6,7 +6,6 @@ Explorar a estrutura do sistema de arquivos Linux, entender como as permissões 
 ## Pré-requisitos
 - Docker instalado na máquina
 - Docker Compose instalado
-- Ter concluído o Lab 01 (recomendado)
 
 ## Como iniciar o laboratório
 
@@ -17,12 +16,7 @@ docker compose up -d
 
 Entre no container:
 ```bash
-docker compose exec so-lab-02 bash
-```
-
-Rode o script de boas-vindas:
-```bash
-bash scripts/setup.sh
+docker compose exec so-lab-02 bash --login
 ```
 
 ---
