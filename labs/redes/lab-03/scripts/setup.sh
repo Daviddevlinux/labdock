@@ -1,0 +1,18 @@
+#!/bin/bash
+
+echo ""
+echo "╔══════════════════════════════════════════════════════════╗"
+echo "║             LABDOCK — Redes de Computadores              ║"
+echo "║             Lab 03 — Roteamento entre Redes              ║"
+echo "╚══════════════════════════════════════════════════════════╝"
+echo ""
+echo "  Bem-vindo(a) ao ambiente de laboratório!"
+echo ""
+echo "  Neste lab você vai:"
+echo "   → Entender como roteadores conectam redes diferentes"
+echo "   → Configurar rotas estáticas entre sub-redes"
+echo "   → Testar conectividade entre hosts em redes distintas"
+echo "   → Observar o papel do gateway no roteamento"
+echo ""
+echo "  Consulte o README.md para ver todos os exercícios."
+echo ""

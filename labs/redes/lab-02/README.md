@@ -1,6 +1,4 @@
 # Redes de Computadores — Lab 02: Análise de Tráfego com tcpdump
----
-
 ## Objetivo
 
 Capturar e analisar tráfego de rede em tempo real utilizando o tcpdump. O aluno irá gerar diferentes tipos de tráfego (HTTP, DNS, ICMP) e observar como os pacotes trafegam nas camadas do modelo TCP/IP, identificando protocolos, endereços e portas.
