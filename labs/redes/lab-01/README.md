@@ -1,12 +1,5 @@
 # Redes de Computadores — Lab 01: Cliente-Servidor TCP
 
-**Disciplina:** Redes de Computadores  
-**Nível:** Intermediário  
-**Duração estimada:** 90 minutos  
-**Ferramentas:** Python 3, netcat, tcpdump, iproute2, iputils-ping
-
----
-
 ## Objetivo
 
 Compreender na prática o modelo cliente-servidor utilizando o protocolo TCP/IP. O aluno irá iniciar dois containers em uma rede virtual Docker, observar a comunicação TCP, enviar mensagens entre os containers e simular situações de falha de rede.
