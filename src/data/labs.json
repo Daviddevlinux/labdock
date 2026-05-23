@@ -12,14 +12,7 @@
           "descricao": "Neste laboratório você vai interagir diretamente com o kernel Linux para entender como processos são criados, gerenciados e encerrados. Usando ferramentas de monitoramento em tempo real, é possível observar o comportamento do sistema sob diferentes condições de carga.",
           "nivel": "Iniciante",
           "duracao": "90 min",
-          "ferramentas": [
-            "Ubuntu 24.04",
-            "htop",
-            "bash",
-            "vim",
-            "stress-ng",
-            "procps"
-          ],
+          "ferramentas": ["Ubuntu 24.04", "htop", "bash", "vim", "stress-ng", "procps"],
           "objetivos": [
             "Entender como o Linux gerencia e prioriza processos em execução",
             "Monitorar consumo de CPU e memória com htop em tempo real",
@@ -43,14 +36,7 @@
           "descricao": "Neste laboratório você vai navegar pela estrutura de diretórios do Linux, criar arquivos e diretórios, e aprender a controlar permissões de acesso usando chmod e chown. Também será possível monitorar o uso de disco com ferramentas nativas do sistema.",
           "nivel": "Iniciante",
           "duracao": "90 min",
-          "ferramentas": [
-            "Ubuntu 24.04",
-            "bash",
-            "vim",
-            "nano",
-            "tree",
-            "coreutils"
-          ],
+          "ferramentas": ["Ubuntu 24.04", "bash", "vim", "nano", "tree", "coreutils"],
           "objetivos": [
             "Explorar a estrutura de diretórios do Linux",
             "Criar e manipular arquivos e diretórios",
@@ -74,13 +60,7 @@
           "descricao": "Neste laboratório você vai observar na prática como o escalonador do Linux distribui o tempo de CPU entre processos com diferentes prioridades. O container é configurado com apenas 1 núcleo para que a disputa entre processos seja claramente visível no htop.",
           "nivel": "Intermediário",
           "duracao": "90 min",
-          "ferramentas": [
-            "Ubuntu 24.04",
-            "htop",
-            "stress-ng",
-            "procps",
-            "bash"
-          ],
+          "ferramentas": ["Ubuntu 24.04", "htop", "stress-ng", "procps", "bash"],
           "objetivos": [
             "Entender o conceito de escalonamento de processos",
             "Iniciar processos com prioridades diferentes usando nice",
@@ -111,13 +91,7 @@
           "descricao": "Dois containers (cliente e servidor) são iniciados na mesma rede virtual Docker. O aluno pode observar o tráfego, testar conexões TCP e simular diferentes cenários de comunicação entre processos em rede.",
           "nivel": "Intermediário",
           "duracao": "90 min",
-          "ferramentas": [
-            "Python 3",
-            "netcat",
-            "curl",
-            "tcpdump",
-            "Ubuntu 24.04"
-          ],
+          "ferramentas": ["Python 3", "netcat", "curl", "tcpdump", "Ubuntu 24.04"],
           "objetivos": [
             "Estabelecer uma conexão TCP entre cliente e servidor",
             "Capturar tráfego de rede com tcpdump e identificar o handshake",
@@ -130,8 +104,56 @@
             "iniciais": "NP"
           },
           "download": {
-            "arquivo": "lab-redes-cliente-servidor.zip",
-            "url": "#"
+            "arquivo": "redes-lab-01.zip",
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-redes-lab01/redes-lab-01.zip"
+          }
+        },
+        {
+          "slug": "lab-02-analise-trafego",
+          "nome": "Lab 02 — Análise de Tráfego com tcpdump",
+          "objetivo": "Capture e analise tráfego de rede em tempo real, identificando protocolos e observando como os pacotes trafegam nas camadas do modelo TCP/IP.",
+          "descricao": "O aluno irá gerar diferentes tipos de tráfego (HTTP, DNS, ICMP) e usar o tcpdump para capturar e inspecionar os pacotes em tempo real, compreendendo na prática o funcionamento das camadas de rede.",
+          "nivel": "Intermediário",
+          "duracao": "90 min",
+          "ferramentas": ["tcpdump", "curl", "ping", "dig", "Ubuntu 24.04"],
+          "objetivos": [
+            "Capturar pacotes de rede em tempo real com tcpdump",
+            "Identificar protocolos das camadas OSI",
+            "Analisar tráfego HTTP, DNS e ICMP",
+            "Filtrar capturas por protocolo, porta e host"
+          ],
+          "professor": {
+            "nome": "Prof. Nome do Professor",
+            "departamento": "Departamento de Sistemas e Computação · UFPB",
+            "iniciais": "NP"
+          },
+          "download": {
+            "arquivo": "redes-lab-02.zip",
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-redes-lab02/redes-lab-02.zip"
+          }
+        },
+        {
+          "slug": "lab-03-roteamento",
+          "nome": "Lab 03 — Roteamento entre Redes",
+          "objetivo": "Compreenda na prática como o roteamento conecta redes distintas configurando rotas estáticas entre containers em sub-redes diferentes.",
+          "descricao": "O aluno irá configurar rotas estáticas entre dois hosts em sub-redes diferentes, usando um container como roteador. É possível observar como os pacotes trafegam entre as redes e o papel do gateway no roteamento.",
+          "nivel": "Avançado",
+          "duracao": "90 min",
+          "ferramentas": ["iproute2", "ping", "tcpdump", "netcat", "Ubuntu 24.04"],
+          "objetivos": [
+            "Entender como roteadores conectam redes diferentes",
+            "Configurar rotas estáticas entre sub-redes",
+            "Testar conectividade entre hosts em redes distintas",
+            "Observar o papel do gateway no roteamento"
+          ],
+          "professor": {
+            "nome": "Prof. Nome do Professor",
+            "departamento": "Departamento de Sistemas e Computação · UFPB",
+            "iniciais": "NP"
+          },
+          "download": {
+            "arquivo": "redes-lab-03.zip",
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-redes-lab03/redes-lab-03.zip"
           }
         }
       ]
@@ -148,13 +170,7 @@
           "descricao": "O aluno executa benchmarks reais de CPU e memória, coleta métricas com ferramentas profissionais e aprende a interpretar os resultados para identificar gargalos de desempenho em sistemas computacionais.",
           "nivel": "Intermediário",
           "duracao": "120 min",
-          "ferramentas": [
-            "Ubuntu 24.04",
-            "stress-ng",
-            "Apache Bench",
-            "htop",
-            "sysbench"
-          ],
+          "ferramentas": ["Ubuntu 24.04", "stress-ng", "Apache Bench", "htop", "sysbench"],
           "objetivos": [
             "Executar benchmark de CPU e registrar throughput em diferentes cargas",
             "Medir tempo de execução com e sem carga no sistema",
