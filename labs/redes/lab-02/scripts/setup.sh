@@ -1,0 +1,18 @@
+#!/bin/bash
+
+echo ""
+echo "╔══════════════════════════════════════════════════════════╗"
+echo "║             LABDOCK — Redes de Computadores              ║"
+echo "║         Lab 02 — Análise de Tráfego com tcpdump          ║"
+echo "╚══════════════════════════════════════════════════════════╝"
+echo ""
+echo "  Bem-vindo(a) ao ambiente de laboratório!"
+echo ""
+echo "  Neste lab você vai:"
+echo "   → Capturar pacotes de rede em tempo real com tcpdump"
+echo "   → Identificar protocolos das camadas OSI"
+echo "   → Analisar tráfego HTTP, DNS e ICMP"
+echo "   → Filtrar capturas por protocolo, porta e host"
+echo ""
+echo "  Consulte o README.md para ver todos os exercícios."
+echo ""
