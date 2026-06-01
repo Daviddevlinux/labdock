@@ -4,6 +4,7 @@ import labs from '../data/labs.json'
 
 export default function LabDetail() {
   const { disciplinaSlug, labSlug } = useParams()
+  const baseUrl = import.meta.env.BASE_URL
 
   const disciplina = labs.disciplinas.find(d => d.slug === disciplinaSlug)
   const lab = disciplina?.labs.find(l => l.slug === labSlug)
@@ -19,6 +20,10 @@ export default function LabDetail() {
       </div>
     </>
   )
+
+  const downloadUrl = lab.download.url.startsWith('http') || lab.download.url.startsWith('#')
+    ? lab.download.url
+    : `${baseUrl}${lab.download.url}`
 
   return (
     <>
@@ -73,7 +78,7 @@ export default function LabDetail() {
           <div className="download-box">
             <h4>Baixar laboratório</h4>
             <p>Inclui o ambiente Docker completo, instruções de uso e o enunciado dos exercícios.</p>
-            <a href={lab.download.url} className="download-btn">
+            <a href={downloadUrl} className="download-btn">
               ⬇ Baixar {lab.download.arquivo}
             </a>
             <div className="download-hint">
