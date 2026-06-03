@@ -153,7 +153,7 @@
           },
           "download": {
             "arquivo": "redes-lab-03.zip",
-            "url": "releases/redes-lab-03.zip"
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-redes-lab03/redes-lab-03.zip"
           }
         }
       ]
@@ -165,17 +165,17 @@
       "labs": [
         {
           "slug": "lab-01-benchmark",
-          "nome": "Lab 01 — Benchmark de CPU",
-          "objetivo": "Realize benchmarks de um sistema, colete métricas de desempenho e compare resultados sob diferentes condições de carga.",
-          "descricao": "O aluno executa benchmarks reais de CPU e memória, coleta métricas com ferramentas profissionais e aprende a interpretar os resultados para identificar gargalos de desempenho em sistemas computacionais.",
+          "nome": "Lab 01 — Benchmarking de CPU e Memória",
+          "objetivo": "Realize benchmarks de CPU sob diferentes cargas, colete métricas de desempenho e visualize os resultados em gráficos.",
+          "descricao": "O aluno executa benchmarks reais de CPU com sysbench, coleta métricas de throughput e latência sob diferentes cargas e visualiza os resultados no Datawrapper para identificar gargalos de desempenho.",
           "nivel": "Intermediário",
-          "duracao": "120 min",
-          "ferramentas": ["Ubuntu 24.04", "stress-ng", "Apache Bench", "htop", "sysbench"],
+          "duracao": "90 min",
+          "ferramentas": ["Ubuntu 24.04", "sysbench", "stress-ng", "htop"],
           "objetivos": [
             "Executar benchmark de CPU e registrar throughput em diferentes cargas",
-            "Medir tempo de execução com e sem carga no sistema",
-            "Simular requisições HTTP e analisar latência",
-            "Identificar o gargalo do sistema em diferentes cenários"
+            "Medir latência média e percentil 95 por cenário",
+            "Exportar resultados em CSV e visualizar no Datawrapper",
+            "Identificar o ponto de rendimento decrescente com mais núcleos"
           ],
           "professor": {
             "nome": "Prof. Nome do Professor",
@@ -183,8 +183,56 @@
             "iniciais": "NP"
           },
           "download": {
-            "arquivo": "lab-desempenho-benchmark.zip",
-            "url": "#"
+            "arquivo": "avd-lab-01.zip",
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-avd-lab01/avd-lab-01.zip"
+          }
+        },
+        {
+          "slug": "lab-02-throughput-latencia",
+          "nome": "Lab 02 — Throughput e Latência com Apache Bench",
+          "objetivo": "Meça o desempenho de um servidor web sob diferentes níveis de concorrência e observe como throughput e latência se comportam.",
+          "descricao": "O aluno sobe um servidor Apache e usa o Apache Bench para simular requisições HTTP com concorrência variada, coletando métricas de throughput, latência média, p90 e p99 para análise e visualização.",
+          "nivel": "Intermediário",
+          "duracao": "90 min",
+          "ferramentas": ["Ubuntu 24.04", "Apache", "Apache Bench", "htop"],
+          "objetivos": [
+            "Iniciar um servidor web Apache dentro do container",
+            "Simular requisições HTTP com diferentes níveis de concorrência",
+            "Medir throughput, latência média, p90 e p99",
+            "Visualizar os resultados no Datawrapper e identificar o ponto de saturação"
+          ],
+          "professor": {
+            "nome": "Prof. Nome do Professor",
+            "departamento": "Departamento de Sistemas e Computação · UFPB",
+            "iniciais": "NP"
+          },
+          "download": {
+            "arquivo": "avd-lab-02.zip",
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-avd-lab02/avd-lab-02.zip"
+          }
+        },
+        {
+          "slug": "lab-03-simulacao-filas",
+          "nome": "Lab 03 — Simulação de Filas M/M/1",
+          "objetivo": "Simule o comportamento de uma fila M/M/1 sob diferentes níveis de carga e observe como o sistema se comporta quando se aproxima da saturação.",
+          "descricao": "O aluno executa um simulador Python de fila M/M/1, coleta métricas de tempo de espera, tamanho da fila e utilização do servidor, compara os resultados com os valores teóricos e visualiza os dados no Datawrapper.",
+          "nivel": "Avançado",
+          "duracao": "90 min",
+          "ferramentas": ["Ubuntu 24.04", "Python 3"],
+          "objetivos": [
+            "Entender o modelo de fila M/M/1 e seus parâmetros",
+            "Simular chegada de clientes sob diferentes taxas de utilização",
+            "Comparar resultados da simulação com as fórmulas teóricas",
+            "Visualizar o comportamento não-linear da fila próxima à saturação"
+          ],
+          "professor": {
+            "nome": "Prof. Nome do Professor",
+            "departamento": "Departamento de Sistemas e Computação · UFPB",
+            "iniciais": "NP"
+          },
+          "download": {
+            "arquivo": "avd-lab-03.zip",
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-avd-lab03/avd-lab-03.zip"
           }
         }
       ]
