@@ -1,0 +1,12 @@
+services:
+  avd-lab-02:
+    build: .
+    container_name: avd-lab-02
+    volumes:
+      - ./scripts/setup.sh:/etc/profile.d/setup.sh
+      - ./resultados:/lab/resultados
+    ports:
+      - "8080:80"
+    stdin_open: true
+    tty: true
+    command: ["/bin/bash", "--login"]

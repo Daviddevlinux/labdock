@@ -1,0 +1,10 @@
+services:
+  avd-lab-03:
+    build: .
+    container_name: avd-lab-03
+    volumes:
+      - ./scripts/setup.sh:/etc/profile.d/setup.sh
+      - ./resultados:/lab/resultados
+    stdin_open: true
+    tty: true
+    command: ["/bin/bash", "--login"]
