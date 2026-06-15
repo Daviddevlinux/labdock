@@ -57,7 +57,7 @@ export default function Sobre() {
 
                 <div className="flow-prereq">
                   <strong>Pré-requisito único</strong>
-                  <span>Docker instalado · grátis · Win · macOS · Linux</span>
+                  <span>Docker instalado · Windows · MacOS · Linux</span>
                 </div>
               </div>
             </div>
