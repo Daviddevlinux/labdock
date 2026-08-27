@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo ""
+echo "╔══════════════════════════════════════════════════════════╗"
+echo "║   LABDOCK — Avaliação de Desempenho de Sistemas (2026.2) ║"
+echo "║     Lab 01 — Variabilidade e Comparação de Desempenho    ║"
+echo "╚══════════════════════════════════════════════════════════╝"
+echo ""
+echo "  Bem-vindo(a) ao ambiente de laboratório!"
+echo ""
+echo "  Para começar, execute:"
+echo "    python3 scripts/gerar_entrada.py 50000 entrada.txt"
+echo ""
+echo "  Consulte o README.md ou o PDF para ver todos os exercícios."
+echo ""

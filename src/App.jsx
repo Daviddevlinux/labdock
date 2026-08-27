@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import Sobre from './pages/Sobre'
 import Catalogo from './pages/Catalogo'
 import LabDetail from './pages/LabDetail'
+import LabRoteiro from './pages/LabRoteiro'
 import Contato from './pages/Contato'
 import useTheme from './hooks/useTheme'
 import './index.css'
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/sobre" element={<Sobre />} />
         <Route path="/laboratorios" element={<Catalogo />} />
         <Route path="/laboratorios/:disciplinaSlug/:labSlug" element={<LabDetail />} />
+        <Route path="/laboratorios/:disciplinaSlug/:labSlug/roteiro" element={<LabRoteiro />} />
         <Route path="/contato" element={<Contato />} />
       </Routes>
     </BrowserRouter>

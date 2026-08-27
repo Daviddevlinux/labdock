@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import labs from '../data/labs.json'
+import { readmes } from '../lib/readmes'
 
 export default function LabDetail() {
   const { disciplinaSlug, labSlug } = useParams()
@@ -8,6 +9,7 @@ export default function LabDetail() {
 
   const disciplina = labs.disciplinas.find(d => d.slug === disciplinaSlug)
   const lab = disciplina?.labs.find(l => l.slug === labSlug)
+  const hasRoteiro = Boolean(lab?.readme && readmes[lab.readme])
 
   if (!lab) return (
     <>
@@ -74,6 +76,16 @@ export default function LabDetail() {
               ))}
             </div>
           </div>
+
+          {hasRoteiro && (
+            <div className="roteiro-box">
+              <h4>Roteiro do laboratório</h4>
+              <p>Veja o passo a passo completo, com todos os exercícios e comandos explicados.</p>
+              <Link to={`/laboratorios/${disciplinaSlug}/${labSlug}/roteiro`} className="roteiro-btn">
+                📄 Ver roteiro completo
+              </Link>
+            </div>
+          )}
 
           <div className="download-box">
             <h4>Baixar laboratório</h4>
