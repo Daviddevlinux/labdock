@@ -1,196 +1,332 @@
 # LabDock
+
 ## Avaliação de Desempenho de Sistemas (2026.2)
+
 ### Lab 01 — Variabilidade e Comparação de Desempenho
 
 **Professora:** Raquel Vigolvino Lopes
 
 ## Objetivo
 
-Sentir na prática a variabilidade das medições de desempenho e comparar
-o comportamento de duas implementações equivalentes de Merge Sort —
-uma em Python e outra em Java — sob diferentes tamanhos de entrada,
-produzindo um relatório final com gráficos que sustentem suas
-conclusões.
+Você vai descobrir, na prática, por que medir o tempo de um programa uma
+única vez não basta. Vamos comparar duas versões do mesmo algoritmo de
+ordenação, o **Merge Sort**: uma escrita em Python e outra em Java. Ao final,
+você terá dados e gráficos para discutir variabilidade, tempo, memória e
+escalabilidade.
 
-## Contexto
+## Antes de começar: a ideia do experimento
 
-Ao medir o desempenho de um programa, é tentador rodá-lo **uma única
-vez** e considerar o resultado como "o" tempo de execução. Na prática,
-medições de desempenho variam entre execuções por diversos fatores:
-escalonamento do sistema operacional, estado do cache, coleta de lixo
-(no caso do Java), ruído de outros processos na máquina, entre outros.
+Pense assim: se você cronometrar todo dia o tempo que leva pra ir de casa até
+a faculdade, pela mesma rota, você não vai ter o mesmo tempo todo dia. Um dia
+tem mais trânsito, outro dia o sinal fecha, outro dia você anda um pouco mais
+rápido sem nem perceber. O tempo “real” da viagem varia, mesmo que o trajeto
+seja sempre o mesmo.
 
-Por isso, avaliação de desempenho séria exige **planejamento
-experimental**: decidir quantas repetições fazer, quais entradas
-testar, e como resumir estatisticamente os resultados (média, mediana,
-desvio padrão, percentis) antes de tirar qualquer conclusão.
+Com programas de computador é parecido: rodar o mesmo código, sobre os mesmos
+dados, duas vezes seguidas, não vai dar exatamente o mesmo tempo. Isso é
+normal — e é exatamente isso que você vai comprovar neste laboratório.
 
-Neste laboratório, você vai comparar duas implementações do mesmo
-algoritmo (Merge Sort) em linguagens diferentes — Python e Java — e
-observar como o tempo de execução, o uso de CPU e o consumo de memória
-variam entre execuções e entre tamanhos de entrada.
+Essa diferença pode acontecer porque outros programas usam o computador ao
+mesmo tempo, porque o sistema operacional alterna a atenção entre tarefas, ou
+porque dados usados recentemente ficam temporariamente mais fáceis de acessar.
+No Java, também existe a preparação automática do código para execução pela
+máquina virtual, chamada **JIT** (*Just-In-Time*): nas primeiras execuções, ela
+pode alterar um pouco os tempos observados.
+
+Para uma comparação justa, faremos várias repetições e depois olharemos para
+os resultados como um conjunto, usando medidas como média, mediana e desvio
+padrão. Esse planejamento — decidir entradas, repetições e como resumir os
+dados antes de concluir algo — é chamado de **planejamento experimental**.
 
 ## Pré-requisitos
 
-- Docker e Docker Compose instalados
-- Conhecimento básico de terminal Linux
-- Noções de complexidade de algoritmos (desejável)
+- Docker e Docker Compose instalados.
+- Um terminal aberto na pasta deste laboratório.
+- Noções de complexidade de algoritmos ajudam, mas não são obrigatórias.
+
+> **O que é Docker?** Pense nele como uma caixa pronta para o laboratório:
+> dentro dela já estão Python, Java e as demais ferramentas necessárias. Você
+> usa os comandos abaixo para abrir essa caixa, sem precisar instalar cada
+> ferramenta separadamente no seu computador.
+
+## Resumo rápido: comandos e resultado esperado
+
+Execute estes comandos **depois de entrar no container**, como explicado na
+próxima seção.
+
+| O que fazer | Comando | O que esperar |
+|---|---|---|
+| 1. Criar uma lista de números para ordenar | `python3 scripts/gerar_entrada.py 50000 entrada.txt` | `Arquivo 'entrada.txt' gerado com 50000 números (modo: aleatorio).` |
+| 2. Rodar o experimento | `./scripts/executar_experimento.sh entrada.txt 50000` | Linhas `Executando python...` e `Executando java...`; no fim, `✔ Experimento concluído!` |
+| 3. Ver os resultados | `cat resultados/experimento.csv` | Uma tabela de texto com os tempos e a memória de cada execução |
+
+> **Importante:** depois de gerar a entrada, use o **mesmo número** no
+> comando do experimento. Esse número é registrado no CSV; se não bater, sua
+> tabela ficará identificada incorretamente.
+>
+> ```bash
+> python3 scripts/gerar_entrada.py 200000 entrada.txt
+> ./scripts/executar_experimento.sh entrada.txt 200000
+> #                                              ^^^^^^ tem que bater com o número acima
+> ```
 
 ## Como iniciar o laboratório
 
-Abra um terminal nesta pasta e execute:
+1. Abra um terminal nesta pasta.
+2. Inicie a caixa do laboratório em segundo plano:
 
-```bash
-docker compose up -d
-docker compose exec avd2026-2-lab-01 bash --login
-```
+   ```bash
+   docker compose up -d
+   ```
+
+   Você deverá ver mensagens informando que o serviço foi criado ou iniciado.
+   O `-d` significa “em segundo plano”: o container continua rodando enquanto
+   você usa o terminal.
+
+3. Entre no ambiente do laboratório:
+
+   ```bash
+   docker compose exec avd2026-2-lab-01 bash --login
+   ```
+
+   Se deu certo, o começo da linha do terminal muda para algo parecido com
+   isto, indicando que você está dentro do container:
+
+   ```text
+   root@...:/lab#
+   ```
+
+Os comandos dos exercícios a seguir devem ser executados **dentro desse
+ambiente**, a menos que seja indicado o contrário.
 
 ## Exercícios
 
-### Exercício 1 — Explorar as implementações
+### Exercício 1 — Conhecer as duas implementações
 
-Antes de rodar qualquer experimento, leia o código das duas
-implementações:
+Antes de medir, veja o que será comparado:
 
 ```bash
 cat merge_sort.py
 cat MergeSort.java
 ```
 
-Ambas implementam o mesmo algoritmo (Merge Sort recursivo, dividindo o
-vetor ao meio e mesclando as partes ordenadas). Identifique:
+Os dois arquivos implementam o **Merge Sort**, um jeito de ordenar números que
+funciona como organizar um baralho: você divide o monte em partes menores até
+ficar fácil lidar com elas e depois junta as partes já ordenadas. A parte em
+que a função chama a si mesma para resolver pedaços menores é a **recursão**.
+A parte que junta dois pedaços ordenados é a **mesclagem** (`merge`).
 
-- Onde ocorre a recursão em cada versão
-- Onde ocorre a mesclagem (`merge`)
-- Que ambas fazem uma verificação de corretude ao final (garantindo que
-  o resultado está de fato ordenado)
+Ao ler os arquivos, identifique:
 
-### Exercício 2 — Gerar uma entrada e rodar um primeiro experimento
+- Onde acontece a recursão em cada linguagem.
+- Onde acontece a mesclagem (`merge`).
+- Onde cada programa verifica a corretude no final — isto é, confirma que o
+  resultado realmente ficou em ordem.
 
-Gere um arquivo de entrada com um tamanho à sua escolha:
+Não precisa alterar o código. A ideia é perceber que os dois programas fazem a
+mesma tarefa; assim, as diferenças medidas podem ser discutidas em relação às
+linguagens e ao ambiente de execução.
+
+### Exercício 2 — Gerar uma entrada e fazer a primeira medição
+
+Primeiro, crie uma lista com 50 mil números:
 
 ```bash
 python3 scripts/gerar_entrada.py 50000 entrada.txt
 ```
 
-O primeiro parâmetro é o tamanho do vetor. Você pode gerar entradas em
-três modos: `aleatorio` (padrão), `crescente` ou `decrescente` — por
-exemplo:
+Saída esperada:
+
+```text
+Arquivo 'entrada.txt' gerado com 50000 números (modo: aleatorio).
+```
+
+O primeiro número é o tamanho da lista. Por padrão, os números são criados em
+ordem aleatória. Se quiser testar uma lista crescente ou decrescente, acrescente
+o modo ao final do comando:
 
 ```bash
 python3 scripts/gerar_entrada.py 50000 entrada.txt decrescente
 ```
 
-Em seguida, rode o experimento, que executa as duas versões (Python e
-Java) várias vezes cada, medindo tempo e memória de cada execução:
+Saída esperada:
+
+```text
+Arquivo 'entrada.txt' gerado com 50000 números (modo: decrescente).
+```
+
+Agora execute o experimento. Ele roda Python e Java cinco vezes cada e guarda
+as medições:
 
 ```bash
 ./scripts/executar_experimento.sh entrada.txt 50000
 ```
 
-Por padrão, cada versão roda 5 vezes. Você pode alterar esse número
-passando um terceiro parâmetro:
+Você verá mensagens parecidas com estas; os valores de tempo não serão iguais
+aos do exemplo e podem variar entre execuções:
+
+```text
+Compilando MergeSort.java...
+Executando python (execução 1/5, tamanho=50000)...
+...
+Executando java (execução 5/5, tamanho=50000)...
+
+✔ Experimento concluído! Resultados salvos em resultados/experimento.csv
+```
+
+Se quiser fazer dez repetições em vez de cinco, passe o terceiro argumento:
 
 ```bash
 ./scripts/executar_experimento.sh entrada.txt 50000 10
 ```
 
-Os resultados são salvos (e acumulados) em
-`resultados/experimento.csv`, com uma linha por execução, contendo:
+Abra o arquivo criado:
 
+```bash
+cat resultados/experimento.csv
 ```
+
+Ele terá um cabeçalho e uma linha para cada execução, por exemplo:
+
+```text
 linguagem,tamanho_entrada,execucao,tempo_real_s,tempo_usuario_s,tempo_sistema_s,memoria_kb
+python,50000,1,0.123,0.110,0.010,12345
+java,50000,1,0.087,0.070,0.010,45678
 ```
 
-**Por que medir tempo real, de usuário e de sistema separadamente?**
-O tempo *real* (wall clock) é o que você sentiria com um cronômetro na
-mão; o tempo de *usuário* é o tempo de CPU gasto executando o código
-do programa; o tempo de *sistema* é o tempo de CPU gasto em chamadas
-ao sistema operacional (como leitura de arquivos). Em uma máquina
-ociosa, tempo real ≈ tempo de usuário + tempo de sistema — mas isso
-pode mudar bastante se outros processos estiverem competindo por CPU.
+Os valores acima são apenas ilustrativos. O arquivo CSV é uma tabela em texto:
+cada vírgula separa uma coluna. Ele é acumulativo, então novas execuções são
+adicionadas ao final do mesmo arquivo.
+
+#### O que cada tempo significa?
+
+Imagine que você cronometra uma receita:
+
+- **Tempo real** (*wall clock*) é o tempo do relógio na parede: começa quando
+  você inicia e termina quando tudo acabou, inclusive esperas. É o tempo que
+  você mediria com um cronômetro.
+- **Tempo de usuário** é a parte do tempo de CPU usada pelo próprio programa,
+  como comparar números e montar listas.
+- **Tempo de sistema** é a parte do tempo de CPU usada para pedir ajuda ao
+  sistema operacional, por exemplo ao ler o arquivo de entrada.
+- **Memória** é o maior espaço de memória ocupado pelo programa durante a
+  execução, medido aqui em kilobytes (KB).
+
+Em uma máquina sem outras tarefas pesadas, o tempo real costuma ser próximo da
+soma do tempo de usuário com o tempo de sistema. Mas essa relação pode mudar
+quando há concorrência por CPU, espera por recursos ou outras atividades no
+computador. Esse custo extra de coordenação e espera é chamado de **overhead**.
 
 ### Exercício 3 — Observar a variação entre execuções
 
-Repita o Exercício 2 usando **o mesmo tamanho de entrada** e observe as
-linhas geradas no CSV para uma mesma linguagem.
+Use **o mesmo tamanho de entrada** e observe as linhas no CSV de uma mesma
+linguagem. Você pode repetir o comando anterior para acrescentar mais dados:
 
-- Os tempos de execução são idênticos entre repetições, ou variam?
-- Calcule manualmente (ou em uma planilha) a média e o desvio padrão
-  do `tempo_real_s` para cada linguagem, considerando apenas as
-  execuções desse tamanho de entrada.
-- O desvio padrão é pequeno (medições consistentes) ou grande
-  (medições muito variáveis)? O que isso sugere sobre a confiabilidade
-  de uma medição feita com uma única execução?
+```bash
+./scripts/executar_experimento.sh entrada.txt 50000
+cat resultados/experimento.csv
+```
+
+Compare, por exemplo, todas as linhas que começam com `python,50000` e depois
+as que começam com `java,50000`.
+
+- Os tempos são idênticos entre repetições ou variam?
+- Calcule manualmente, ou em uma planilha, a média e o desvio padrão de
+  `tempo_real_s` para cada linguagem nesse tamanho. A **média** é um valor
+  central; o **desvio padrão** mostra o quanto as medições se espalham em torno
+  dessa média.
+- O desvio padrão ficou pequeno (medições mais consistentes) ou grande
+  (medições mais variáveis)? O que isso diz sobre confiar em apenas uma rodada?
 
 ### Exercício 4 — Testar diferentes tamanhos de entrada
 
-Repita os Exercícios 2 e 3 para **pelo menos três tamanhos de entrada
-diferentes**, à sua escolha (por exemplo, 10 mil, 100 mil e 1 milhão de
-elementos — mas sinta-se livre para escolher outros valores, inclusive
-testar diferentes distribuições com o parâmetro de modo do gerador).
+Repita os exercícios 2 e 3 para **pelo menos três tamanhos diferentes**. Uma
+boa sequência para começar é 10 mil, 100 mil e 1 milhão de números:
 
-Como o script acumula os resultados no mesmo arquivo CSV, ao final
-deste exercício `resultados/experimento.csv` deverá conter execuções
-de Python e Java para todos os tamanhos testados.
+```bash
+python3 scripts/gerar_entrada.py 10000 entrada-10000.txt
+./scripts/executar_experimento.sh entrada-10000.txt 10000
 
-**Atenção:** para tamanhos muito grandes, a execução pode demorar
-alguns segundos — isso é esperado e faz parte da observação.
+python3 scripts/gerar_entrada.py 100000 entrada-100000.txt
+./scripts/executar_experimento.sh entrada-100000.txt 100000
 
-### Exercício 5 — Visualizar no Datawrapper
+python3 scripts/gerar_entrada.py 1000000 entrada-1000000.txt
+./scripts/executar_experimento.sh entrada-1000000.txt 1000000
+```
 
-Copie o conteúdo do arquivo `resultados/experimento.csv` (ou baixe o
-arquivo do container) e importe no [Datawrapper](https://www.datawrapper.de/):
+> **Importante:** em cada par de comandos, o tamanho informado ao gerar o
+> arquivo precisa ser o mesmo tamanho informado ao executar o experimento.
 
-1. Acesse datawrapper.de e clique em **Start creating**
-2. Clique em **Copy & paste data table** e cole o conteúdo do CSV
-3. Clique em **Proceed** até chegar em **Visualize**
-4. Escolha o tipo de gráfico mais adequado para comparar Python e Java
-   (por exemplo, um gráfico de linhas com o tamanho da entrada no eixo
-   X e o tempo médio no eixo Y, uma linha para cada linguagem)
+Você também pode testar os modos `aleatorio`, `crescente` e `decrescente` para
+investigar se a ordem inicial dos números faz diferença. Como o script acumula
+os resultados, o arquivo `resultados/experimento.csv` deverá ter linhas de
+Python e Java para todos os tamanhos escolhidos.
+
+> **Atenção:** entradas grandes podem levar alguns segundos. Isso não é erro:
+> é parte do que você está observando. Se o computador ficar lento, comece com
+> tamanhos menores e aumente aos poucos.
+
+Aqui entra a ideia de **escalabilidade**: observe como o tempo muda quando a
+quantidade de números aumenta. É como comparar o tempo de organizar 10 papéis,
+100 papéis e mil papéis: se a pilha cresce, o trabalho também cresce, mas nem
+sempre na mesma proporção. O Merge Sort tem complexidade teórica
+`O(n log n)`, que descreve como o trabalho tende a crescer conforme `n`, o
+tamanho da entrada, aumenta.
+
+### Exercício 5 — Criar gráficos no Datawrapper
+
+Copie o conteúdo de `resultados/experimento.csv` — ou baixe esse arquivo — e
+importe-o no [Datawrapper](https://www.datawrapper.de/):
+
+1. Acesse o site e clique em **Start creating**.
+2. Escolha **Copy & paste data table** e cole o conteúdo do CSV.
+3. Clique em **Proceed** até chegar à etapa **Visualize**.
+4. Escolha um gráfico adequado para comparar as linguagens. Para tempo médio,
+   um gráfico de linhas pode usar o tamanho da entrada no eixo X e o tempo no
+   eixo Y, com uma linha para Python e outra para Java.
 
 Produza pelo menos dois gráficos:
 
-- **Tempo de execução vs. tamanho da entrada**, comparando Python e
-  Java
-- Um gráfico à sua escolha, envolvendo **memória** ou outra métrica que
-  você considere relevante
+- **Tempo de execução versus tamanho da entrada**, comparando Python e Java.
+- Um gráfico à sua escolha usando **memória** ou outra métrica relevante.
+
+Se houver mais de uma execução para cada tamanho, calcule a média antes de
+montar o gráfico de tempo médio. Assim, uma execução excepcionalmente rápida ou
+lenta terá menos peso na sua conclusão.
 
 ### Exercício 6 — Relatório final
 
-Com base nos dados coletados e nos gráficos produzidos, escreva um
-relatório curto (pode ser neste próprio README, em um documento à
-parte, ou no formato que a professora indicar em sala) respondendo:
+Com os dados e gráficos em mãos, escreva um relatório curto. Ele pode ficar
+neste README, em um documento separado ou no formato informado pela professora.
+Responda às cinco perguntas abaixo:
 
-1. **Comparação entre linguagens.** Qual implementação foi mais rápida?
-   Isso se manteve consistente para todos os tamanhos de entrada
-   testados, ou houve alguma inversão? Se houve, a que você atribui
-   essa mudança? *(Dica: pense no que acontece antes mesmo do
-   algoritmo começar a rodar, em cada linguagem.)*
-2. **Variabilidade.** Com base no que você observou no Exercício 3, uma
-   única execução seria suficiente para afirmar qual linguagem é mais
-   rápida? Por quê?
-3. **Escalabilidade.** Observando o gráfico de tempo vs. tamanho da
-   entrada, o crescimento parece **linear**? Uma aplicação que escala
-   linearmente apresenta uma reta nesse tipo de gráfico. O que você
-   observou se aproxima disso, ou o crescimento é mais acentuado?
-   Relacione sua resposta com a complexidade teórica do Merge Sort.
-4. **Memória.** O consumo de memória também cresce da mesma forma que
-   o tempo de execução? Alguma linguagem consome consistentemente mais
-   memória que a outra?
-5. **Métrica adicional.** Além de tempo de execução e memória, proponha
-   **uma outra métrica** que poderia ser interessante medir neste
-   experimento (por exemplo, algo relacionado a energia, a I/O, ao
-   número de operações de comparação, ou outra que você imagine).
-   Explique por que ela seria relevante e, se possível, como você a
-   mediria.
+1. **Comparação entre linguagens.** Qual implementação foi mais rápida? Isso
+   se manteve para todos os tamanhos testados, ou houve alguma inversão? Se
+   houve, a que você atribui essa mudança? *Dica: pense no que acontece antes
+   de o algoritmo começar a rodar em cada linguagem, inclusive a preparação
+   automática do Java (JIT).*
+2. **Variabilidade.** Com base no Exercício 3, uma única execução seria
+   suficiente para afirmar qual linguagem é mais rápida? Por quê?
+3. **Escalabilidade.** No gráfico de tempo versus tamanho, o crescimento parece
+   **linear**? Um crescimento linear desenha aproximadamente uma reta: dobrar
+   a entrada tende a dobrar o tempo. O que você observou se aproxima disso ou
+   é mais acentuado? Relacione a resposta à complexidade teórica do Merge Sort.
+4. **Memória.** O consumo de memória cresce da mesma forma que o tempo? Alguma
+   linguagem usa consistentemente mais memória que a outra?
+5. **Métrica adicional.** Além de tempo e memória, proponha uma métrica que
+   seria interessante medir — por exemplo, energia, operações de leitura e
+   escrita (I/O), ou quantidade de comparações. Explique por que ela importa e,
+   se possível, como poderia medi-la.
 
 ## Como encerrar o laboratório
+
+Quando terminar, saia do container e desligue o ambiente:
 
 ```bash
 exit
 docker compose down
 ```
 
-Os resultados ficam salvos na pasta `resultados/` mesmo após encerrar
-o container.
+Saída esperada após o segundo comando: mensagens informando que o container e
+a rede foram removidos. Seus resultados continuam na pasta `resultados/`, mesmo
+depois de encerrar o container.
