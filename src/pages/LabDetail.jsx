@@ -77,16 +77,6 @@ export default function LabDetail() {
             </div>
           </div>
 
-          {hasRoteiro && (
-            <div className="roteiro-box">
-              <h4>Roteiro do laboratório</h4>
-              <p>Veja o passo a passo completo, com todos os exercícios e comandos explicados.</p>
-              <Link to={`/laboratorios/${disciplinaSlug}/${labSlug}/roteiro`} className="roteiro-btn">
-                📄 Ver roteiro completo
-              </Link>
-            </div>
-          )}
-
           <div className="download-box">
             <h4>Baixar laboratório</h4>
             <p>Inclui o ambiente Docker completo, instruções de uso e o enunciado dos exercícios.</p>
@@ -97,6 +87,19 @@ export default function LabDetail() {
               Pré-requisito: Docker instalado · <a href="https://docs.docker.com/get-docker/" target="_blank" rel="noreferrer">Como instalar o Docker</a>
             </div>
           </div>
+
+          {hasRoteiro && (
+            <div className="roteiro-box roteiro-box--featured">
+              <span className="roteiro-box-label">Próximo passo</span>
+              <h4>Abra o roteiro guiado</h4>
+              <p>Depois de baixar o laboratório, veja o passo a passo completo, com todos os exercícios e comandos explicados.</p>
+              <Link to={`/laboratorios/${disciplinaSlug}/${labSlug}/roteiro`} className="roteiro-btn">
+                <span aria-hidden="true">📘</span>
+                <span>Ver roteiro completo</span>
+                <span className="roteiro-btn-arrow" aria-hidden="true">→</span>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </>
