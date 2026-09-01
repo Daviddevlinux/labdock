@@ -273,7 +273,7 @@
           },
           "download": {
             "arquivo": "avd2026-2-lab-01.zip",
-            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-avd2026-2-lab01/avd2026-2-lab-01.zip"
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/avd2026-2-lab-01/avd2026-2-lab-01.zip"
           },
           "readme": "/labs/avd-2026-2/lab-01-variabilidade-merge-sort/README.md"
         }
