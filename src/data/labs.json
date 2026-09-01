@@ -27,7 +27,8 @@
           "download": {
             "arquivo": "so-lab-01.zip",
             "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-so-lab01/so-lab-01.zip"
-          }
+          },
+          "readme": "/labs/so/lab-01/README.md"
         },
         {
           "slug": "lab-02-arquivos",
@@ -51,7 +52,8 @@
           "download": {
             "arquivo": "so-lab-02.zip",
             "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-so-lab02/so-lab-02.zip"
-          }
+          },
+          "readme": "/labs/so/lab-02/README.md"
         },
         {
           "slug": "lab-03-escalonamento",
@@ -75,7 +77,8 @@
           "download": {
             "arquivo": "so-lab-03.zip",
             "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-so-lab03/so-lab-03.zip"
-          }
+          },
+          "readme": "/labs/so/lab-03/README.md"
         }
       ]
     },
@@ -106,7 +109,8 @@
           "download": {
             "arquivo": "redes-lab-01.zip",
             "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-redes-lab01/redes-lab-01.zip"
-          }
+          },
+          "readme": "/labs/redes/lab-01/README.md"
         },
         {
           "slug": "lab-02-analise-trafego",
@@ -130,7 +134,8 @@
           "download": {
             "arquivo": "redes-lab-02.zip",
             "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-redes-lab02/redes-lab-02.zip"
-          }
+          },
+          "readme": "/labs/redes/lab-02/README.md"
         },
         {
           "slug": "lab-03-roteamento",
@@ -154,7 +159,8 @@
           "download": {
             "arquivo": "redes-lab-03.zip",
             "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-redes-lab03/redes-lab-03.zip"
-          }
+          },
+          "readme": "/labs/redes/lab-03/README.md"
         }
       ]
     },
@@ -185,7 +191,8 @@
           "download": {
             "arquivo": "avd-lab-01.zip",
             "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-avd-lab01/avd-lab-01.zip"
-          }
+          },
+          "readme": "/labs/avaliacao/lab-01/README.md"
         },
         {
           "slug": "lab-02-throughput-latencia",
@@ -209,7 +216,8 @@
           "download": {
             "arquivo": "avd-lab-02.zip",
             "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-avd-lab02/avd-lab-02.zip"
-          }
+          },
+          "readme": "/labs/avaliacao/lab-02/README.md"
         },
         {
           "slug": "lab-03-simulacao-filas",
@@ -233,7 +241,41 @@
           "download": {
             "arquivo": "avd-lab-03.zip",
             "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-avd-lab03/avd-lab-03.zip"
-          }
+          },
+          "readme": "/labs/avaliacao/lab-03/README.md"
+        }
+      ]
+    },
+    {
+      "slug": "avaliacao-desempenho-sistemas-2026-2",
+      "nome": "Avaliação de Desempenho de Sistemas — 2026.2",
+      "cor": "#0C447C",
+      "labs": [
+        {
+          "slug": "lab-01-variabilidade-merge-sort",
+          "nome": "Lab 01 — Variabilidade e Comparação de Desempenho",
+          "objetivo": "Sinta na prática a variabilidade das medições de desempenho, comparando duas implementações de Merge Sort (Python e Java) sob diferentes tamanhos de entrada.",
+          "descricao": "Você vai executar duas implementações equivalentes de Merge Sort — uma em Python, outra em Java — coletando métricas de tempo de execução, uso de CPU e memória ao longo de múltiplas repetições e diferentes tamanhos de entrada, produzindo um relatório final com gráficos que sustentem suas conclusões sobre desempenho, variabilidade e escalabilidade.",
+          "nivel": "Iniciante",
+          "duracao": "90 min",
+          "ferramentas": ["Ubuntu 24.04", "Python 3", "Java (OpenJDK)", "time", "bash"],
+          "objetivos": [
+            "Compreender por que uma única execução não é suficiente para avaliar desempenho",
+            "Medir tempo real, de usuário e de sistema, além de uso de memória, com /usr/bin/time",
+            "Comparar o desempenho de duas linguagens em um mesmo algoritmo",
+            "Investigar se o tempo de execução escala linearmente com o tamanho da entrada",
+            "Propor uma métrica de desempenho adicional além de tempo e memória"
+          ],
+          "professor": {
+            "nome": "Profa. Raquel Vigolvino Lopes",
+            "departamento": "Departamento de Ciências Exatas (DCX) · UFPB",
+            "iniciais": "RVL"
+          },
+          "download": {
+            "arquivo": "avd2026-2-lab-01.zip",
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-avd2026-2-lab01/avd2026-2-lab-01.zip"
+          },
+          "readme": "/labs/avd-2026-2/lab-01-variabilidade-merge-sort/README.md"
         }
       ]
     }
