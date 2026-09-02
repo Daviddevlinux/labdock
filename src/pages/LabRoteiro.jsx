@@ -102,11 +102,19 @@ const exerciseSections = [
       'O CSV deve ter resultados para pelo menos três tamanhos.',
       'Entradas grandes podem demorar alguns segundos.',
     ],
+    reflection: [
+      ['Observação inicial', 'Qual foi o tempo de execução das duas versões (Python e Java) com entradas pequenas? Houve diferença significativa?'],
+      ['Escalando a entrada', 'O que acontece com os tempos de execução quando você aumenta o tamanho da entrada? Quem parece mais rápido em cada cenário?'],
+      ['Ponto de virada', 'Você percebeu alguma diferença na comparação das duas versões ao aumentar a entrada? Os resultados se invertem em algum momento?'],
+      ['Reflexão sobre causas', 'Por que você acha que Python pode parecer mais rápido em entradas pequenas, mas Java tende a melhorar em entradas maiores?'],
+      ['Questão crítica', 'O que esses resultados dizem sobre como devemos avaliar o desempenho de linguagens diferentes? É suficiente rodar apenas uma vez com uma entrada pequena?'],
+      ['Conexão prática', 'Em quais tipos de aplicações você acha que Python seria mais vantajoso e em quais Java poderia se destacar?'],
+    ],
   },
   {
     title: 'Exercício 5',
-    subtitle: 'Criar gráficos no Datawrapper',
-    body: 'Use o CSV para montar gráficos. Se houver várias execuções por tamanho, calcule a média antes de fazer o gráfico de tempo.',
+    subtitle: 'Criar gráficos com a ferramenta que preferir',
+    body: 'Use o CSV para montar gráficos. Você pode usar Datawrapper, Planilhas Google, Excel, LibreOffice Calc ou outra ferramenta que já conheça. Se houver várias execuções por tamanho, calcule a média antes de fazer o gráfico de tempo.',
     commands: ['cat resultados/experimento.csv'],
     checks: [
       'Gráfico de tempo de execução versus tamanho da entrada.',
@@ -307,6 +315,19 @@ function AvdMergeSortRoteiro({ disciplina, lab, disciplinaSlug, labSlug }) {
                 <ul>
                   {section.checks.map(check => <li key={check}>{check}</li>)}
                 </ul>
+                {section.reflection && (
+                  <div className="roteiro-reflection">
+                    <strong>Depois dos testes, discuta estas questões</strong>
+                    <ol>
+                      {section.reflection.map(([title, question]) => (
+                        <li key={title}>
+                          <b>{title}</b>
+                          <span>{question}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
               </article>
             ))}
           </div>

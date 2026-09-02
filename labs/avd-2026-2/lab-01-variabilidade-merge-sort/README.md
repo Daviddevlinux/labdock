@@ -273,10 +273,34 @@ sempre na mesma proporção. O Merge Sort tem complexidade teórica
 `O(n log n)`, que descreve como o trabalho tende a crescer conforme `n`, o
 tamanho da entrada, aumenta.
 
-### Exercício 5 — Criar gráficos no Datawrapper
+#### Para discutir após os testes
+
+Use suas medições para responder às perguntas abaixo. Elas ajudam a transformar
+os números do CSV em uma análise de desempenho:
+
+1. **Observação inicial.** Qual foi o tempo de execução das duas versões
+   (Python e Java) com entradas pequenas? Houve diferença significativa?
+2. **Escalando a entrada.** O que acontece com os tempos de execução quando
+   você aumenta o tamanho da entrada? Quem parece mais rápido em cada cenário?
+3. **Ponto de virada.** Você percebeu alguma diferença na comparação das duas
+   versões ao aumentar a entrada? Os resultados se invertem em algum momento?
+4. **Reflexão sobre causas.** Por que você acha que Python pode parecer mais
+   rápido em entradas pequenas, mas Java tende a melhorar em entradas maiores?
+5. **Questão crítica.** O que esses resultados dizem sobre como devemos avaliar
+   o desempenho de linguagens diferentes? É suficiente rodar apenas uma vez
+   com uma entrada pequena?
+6. **Conexão prática.** Em quais tipos de aplicações você acha que Python seria
+   mais vantajoso e em quais Java poderia se destacar?
+
+### Exercício 5 — Criar gráficos com a ferramenta que preferir
 
 Copie o conteúdo de `resultados/experimento.csv` — ou baixe esse arquivo — e
-importe-o no [Datawrapper](https://www.datawrapper.de/):
+monte os gráficos na ferramenta com que você se sentir mais confortável. O
+[Datawrapper](https://www.datawrapper.de/) é uma sugestão, mas não é
+obrigatório: você também pode usar Planilhas Google, Excel, LibreOffice Calc ou
+outra ferramenta de gráficos.
+
+Se escolher o Datawrapper:
 
 1. Acesse o site e clique em **Start creating**.
 2. Escolha **Copy & paste data table** e cole o conteúdo do CSV.
