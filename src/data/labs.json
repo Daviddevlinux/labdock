@@ -276,6 +276,32 @@
             "url": "https://github.com/Daviddevlinux/labdock/releases/download/avd2026-2-lab-01/avd2026-2-lab-01.zip"
           },
           "readme": "/labs/avd-2026-2/lab-01-variabilidade-merge-sort/README.md"
+        },
+        {
+          "slug": "lab-02-comparacao-compressao-ic",
+          "nome": "Lab 02 — Compressão e Intervalos de Confiança",
+          "objetivo": "Compare algoritmos de compressão usando medições repetidas, intervalos de confiança e diferenças pareadas entre métodos.",
+          "descricao": "Você vai comprimir os mesmos conjuntos de arquivos com zip, tar.gz, tar.bz2 e tar.xz, coletando tempo de execução, tamanho final e taxa de compressão. A partir dos resultados, irá calcular intervalos de confiança e interpretar se as diferenças observadas entre os métodos são relevantes para a avaliação de desempenho.",
+          "nivel": "Intermediário",
+          "duracao": "90 min",
+          "ferramentas": ["Ubuntu 24.04", "zip", "gzip", "bzip2", "xz", "tar", "Python 3", "time"],
+          "objetivos": [
+            "Comparar métodos de compressão usando os mesmos conjuntos de arquivos",
+            "Medir tempo de execução, tamanho comprimido e taxa de compressão",
+            "Construir intervalos de confiança de 95% para métricas de desempenho",
+            "Aplicar comparação pareada para analisar a diferença entre dois métodos",
+            "Discutir o compromisso entre rapidez e economia de espaço"
+          ],
+          "professor": {
+            "nome": "Profa. Raquel Vigolvino Lopes",
+            "departamento": "Departamento de Ciências Exatas (DCX) · UFPB",
+            "iniciais": "RVL"
+          },
+          "download": {
+            "arquivo": "avd2026-2-lab-02.zip",
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-avd2026-2-lab02/avd2026-2-lab-02.zip"
+          },
+          "readme": "/labs/avd-2026-2/lab-02-comparacao-compressao-ic/README.md"
         }
       ]
     }

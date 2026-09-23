@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Lab runtime outputs
+labs/**/dados/
+labs/**/resultados/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
