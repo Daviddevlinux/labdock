@@ -992,16 +992,17 @@ mkdir -p teste-compressao
 printf "LabDock LabDock LabDock LabDock LabDock\\n%.0s" {1..200} > teste-compressao/exemplo.txt
 
 tar -cf exemplo.tar teste-compressao
+zip -qr exemplo.zip teste-compressao
 tar -czf exemplo.tar.gz teste-compressao
 tar -cjf exemplo.tar.bz2 teste-compressao
 tar -cJf exemplo.tar.xz teste-compressao
 
-ls -lh exemplo.tar exemplo.tar.gz exemplo.tar.bz2 exemplo.tar.xz
+ls -lh exemplo.tar exemplo.zip exemplo.tar.gz exemplo.tar.bz2 exemplo.tar.xz
 \`\`\`
 
 O arquivo \`.tar\` apenas empacota o diretório em um único arquivo. Já
-os arquivos \`.tar.gz\`, \`.tar.bz2\` e \`.tar.xz\` empacotam e também
-comprimem usando algoritmos diferentes.
+os arquivos \`.zip\`, \`.tar.gz\`, \`.tar.bz2\` e \`.tar.xz\` comprimem usando
+algoritmos e formatos diferentes.
 
 Responda:
 
@@ -1020,13 +1021,22 @@ Gere os conjuntos de arquivos que serão usados no experimento:
 ./scripts/gerar_datasets.sh
 \`\`\`
 
-O script cria a pasta \`dados/\` com diferentes tipos de conteúdo:
+Por padrão, o script cria a pasta \`dados/\` com diferentes conjuntos de
+conteúdo, todos com aproximadamente o mesmo tamanho total:
 
 - \`texto\`: arquivos textuais com frases repetidas
 - \`csv\`: tabelas simulando medições de desempenho
 - \`codigo\`: arquivos de código-fonte Python
 - \`repetitivo\`: conteúdo altamente redundante
 - \`aleatorio\`: conteúdo com menor padrão aparente
+
+Você também pode escolher o tamanho aproximado de cada conjunto. Os
+exemplos abaixo geram conjuntos de cerca de \`1M\` e \`10M\` cada:
+
+\`\`\`bash
+./scripts/gerar_datasets.sh dados 1M
+./scripts/gerar_datasets.sh dados 10M
+\`\`\`
 
 Observe os tamanhos gerados:
 
