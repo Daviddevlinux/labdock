@@ -1,0 +1,18 @@
+#!/bin/bash
+
+echo ""
+echo "╔══════════════════════════════════════════════════════════╗"
+echo "║  LABDOCK — Avaliação de Desempenho de Sistemas (2026.2)  ║"
+echo "║  Lab 03 — Regressão Linear para Predição de Desempenho   ║"
+echo "╚══════════════════════════════════════════════════════════╝"
+echo ""
+echo "  Para comecar, execute:"
+echo "    python3 scripts/gerar_cenarios.py"
+echo "    ./scripts/executar_experimentos.sh dados 5"
+echo ""
+echo "  Depois, escolha um ou dois preditores:"
+echo "    python3 scripts/analisar_regressao.py resultados/experimento.csv --preditores tamanho_total_mb"
+echo "    python3 scripts/analisar_regressao.py resultados/experimento.csv --preditores tamanho_total_mb quantidade_arquivos"
+echo ""
+echo "  Consulte o roteiro guiado para ver todos os exercicios."
+echo ""
