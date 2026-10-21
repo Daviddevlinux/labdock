@@ -306,13 +306,14 @@
         {
           "slug": "lab-03-regressao-linear-desempenho",
           "nome": "Lab 03 — Regressão Linear para Predição de Desempenho",
-          "objetivo": "Construa modelos de regressão linear simples e múltipla para prever o tempo de compressão a partir de características dos conjuntos de arquivos.",
-          "descricao": "Você vai gerar cenários controlados com diferentes tamanhos, quantidades de arquivos e níveis de repetitividade, coletar medições de compressão e escolher uma ou duas variáveis preditoras para ajustar e comparar modelos de regressão linear.",
+          "objetivo": "Explore correlações e construa modelos de regressão linear simples e múltipla para prever métricas de tempo da compressão.",
+          "descricao": "Você vai gerar cenários controlados, coletar medições de compressão, analisar gráficos de dispersão e correlações de Pearson e então escolher uma variável resposta e até duas variáveis preditoras para os modelos de regressão.",
           "nivel": "Intermediário",
           "duracao": "90 min",
           "ferramentas": ["Ubuntu 24.04", "Python 3", "gzip", "tar", "time", "bash"],
           "objetivos": [
             "Distinguir variável resposta de variáveis preditoras em um experimento de desempenho",
+            "Explorar gráficos de dispersão e correlações de Pearson antes de ajustar modelos",
             "Ajustar modelos de regressão linear simples com uma variável preditora",
             "Ajustar modelos de regressão linear múltipla com duas variáveis preditoras",
             "Interpretar coeficientes, R2, R2 ajustado, RMSE e MAE",

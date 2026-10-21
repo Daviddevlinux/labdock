@@ -6,48 +6,54 @@
 
 ## Objetivo
 
-Construir modelos de regressão linear simples e múltipla para prever o
-tempo de compressão de conjuntos de arquivos, escolhendo uma ou duas
-variáveis preditoras e avaliando a qualidade dos modelos obtidos.
+Explorar dados de compressão e construir modelos de regressão linear
+simples e múltipla. Antes de ajustar os modelos, você analisará a
+relação entre as variáveis por meio de gráficos de dispersão e da
+correlação de Pearson.
 
 ## Contexto
 
 Nos laboratórios anteriores, você observou a variabilidade das
 medições e comparou alternativas usando intervalos de confiança. Neste
-laboratório, a pergunta muda: em vez de apenas comparar resultados já
-coletados, será possível **prever** o desempenho de novos cenários.
+laboratório, a pergunta muda: será possível usar características de um
+cenário para prever uma métrica de desempenho?
 
-O tempo de compressão pode depender de vários fatores. Neste
-experimento, ele será a variável resposta e você poderá escolher até
-duas das seguintes variáveis preditoras:
+O experimento mantém o método de compressão fixo como `tar.gz` e varia
+três características dos conjuntos de arquivos, que poderão ser usadas
+como variáveis preditoras:
 
-- `tamanho_total_mb`: tamanho total do conjunto de arquivos
-- `quantidade_arquivos`: número de arquivos no conjunto
-- `repetitividade_pct`: percentual de conteúdo repetitivo nos arquivos
+- `tamanho_total_mb`: tamanho total do conjunto de arquivos;
+- `quantidade_arquivos`: número de arquivos no conjunto;
+- `repetitividade_pct`: percentual de conteúdo repetitivo nos arquivos.
+
+Após explorar os dados, escolha uma das seguintes métricas de tempo
+como variável resposta:
+
+- `tempo_real_s`: tempo decorrido total;
+- `tempo_usuario_s`: tempo de CPU gasto em modo usuário;
+- `tempo_sistema_s`: tempo de CPU gasto pelo sistema operacional.
 
 Com uma variável preditora, você terá uma **regressão linear simples**:
 
 ```text
-tempo_real_s = b0 + b1 * tamanho_total_mb
+tempo_usuario_s = b0 + b1 * tamanho_total_mb
 ```
 
 Com duas variáveis preditoras, terá uma **regressão linear múltipla**:
 
 ```text
-tempo_real_s = b0 + b1 * tamanho_total_mb + b2 * quantidade_arquivos
+tempo_usuario_s = b0 + b1 * tamanho_total_mb + b2 * repetitividade_pct
 ```
 
-O método de compressão será mantido fixo como `tar.gz`. Assim, as
-variações no tempo podem ser relacionadas às características dos
-datasets, e não à troca de algoritmo de compressão. As repetições de
-cada cenário serão usadas para calcular um tempo médio antes do ajuste
-dos modelos.
+As repetições de cada cenário são usadas para calcular uma média antes
+do ajuste dos modelos. Assim, medições repetidas registram a
+variabilidade, mas não são tratadas como novos cenários experimentais.
 
 ## Pré-requisitos
 
-- Docker e Docker Compose instalados
-- Conhecimento básico de terminal Linux
-- Noções iniciais de média e gráficos
+- Docker e Docker Compose instalados;
+- conhecimento básico de terminal Linux;
+- noções iniciais de média, gráficos e correlação.
 
 ## Como iniciar o laboratório
 
@@ -64,13 +70,14 @@ docker compose exec avd2026-2-lab-03 bash --login
 
 Antes de gerar os dados, responda:
 
-- Um conjunto maior deve levar mais tempo para comprimir? Por quê?
+- Um conjunto maior deve aumentar o tempo de usuário durante a
+  compressão? Por quê?
 - Mantendo o tamanho total igual, um conjunto com muitos arquivos deve
-  levar o mesmo tempo que um conjunto com poucos arquivos? Por quê?
-- A repetitividade dos dados pode afetar o tempo de compressão? Como?
+  afetar o tempo real? Por quê?
+- A repetitividade pode afetar os tempos medidos? Como?
 
-Essas respostas são hipóteses. Ao final, você vai confrontá-las com os
-modelos ajustados.
+Essas respostas são hipóteses. Você vai confrontá-las com os gráficos,
+as correlações e os modelos ajustados.
 
 ### Exercício 2 — Gerar cenários controlados
 
@@ -80,8 +87,7 @@ Gere os cenários do experimento:
 python3 scripts/gerar_cenarios.py
 ```
 
-O comando cria 27 cenários, combinando três valores para cada uma das
-três variáveis:
+O comando cria 27 cenários, combinando três valores para cada variável:
 
 | Variável | Valores padrão |
 | --- | --- |
@@ -92,12 +98,10 @@ três variáveis:
 As combinações ficam em `dados/cenarios/`. O arquivo
 `dados/cenarios.csv` registra as características de cada cenário.
 Os dados são sintéticos: a repetitividade representa a proporção de
-bytes construídos a partir de um padrão repetido, para permitir o
-controle dessa característica. Ao gerar novamente os cenários, o
-conteúdo anterior da pasta `dados/` é substituído.
+bytes construídos a partir de um padrão repetido. Ao gerar novamente os
+cenários, o conteúdo anterior da pasta `dados/` é substituído.
 
-Antes da execução completa, você pode testar todo o fluxo com uma
-versão menor, com oito cenários:
+Antes da execução completa, você pode testar o fluxo com oito cenários:
 
 ```bash
 python3 scripts/gerar_cenarios.py --tamanhos-mb 1,2 --quantidades-arquivos 5,50 --repetitividades 20,95
@@ -120,137 +124,121 @@ Execute cinco repetições para cada cenário:
 ./scripts/executar_experimentos.sh dados 5
 ```
 
-O script mantém o algoritmo de compressão fixo (`tar.gz`) e salva uma
-linha por execução em:
+O script salva uma linha por execução em:
 
 ```text
 resultados/experimento.csv
 ```
 
-As colunas principais são:
-
-```text
-cenario
-tamanho_total_mb
-quantidade_arquivos
-repetitividade_pct
-tempo_real_s
-```
-
-Também são coletados tempo de usuário, tempo de sistema, memória,
-tamanho comprimido e taxa de compressão. O arquivo mantém uma linha
-por execução para registrar a variabilidade; o script de análise usa a
-média das repetições de cada cenário, evitando tratar repetições como
-novas configurações experimentais.
-
-Cada nova execução substitui `resultados/experimento.csv` e remove os
+Além das variáveis dos cenários, o arquivo registra `tempo_real_s`,
+`tempo_usuario_s`, `tempo_sistema_s`, memória, tamanho comprimido e
+taxa de compressão. Cada nova execução substitui o CSV e remove os
 arquivos comprimidos de execuções anteriores. Como os tempos podem ser
 curtos, evite executar outras tarefas pesadas durante a coleta.
 
-### Exercício 4 — Regressão linear simples
+### Exercício 4 — Explorar os dados antes da regressão
 
-Escolha **uma** variável preditora. Comece pelo tamanho total:
-
-```bash
-python3 scripts/analisar_regressao.py resultados/experimento.csv --preditores tamanho_total_mb
-```
-
-O script informa a equação ajustada, `R2`, `R2 ajustado`, o erro
-quadrático médio (`RMSE`) e o erro absoluto médio (`MAE`). Para comparar
-modelos com números diferentes de preditores, use principalmente o
-`R2 ajustado`. Ele pode ser menor que `R2`, ou até negativo, quando o
-modelo explica pouco da variação observada.
-
-Exemplo de interpretação de uma saída fictícia:
-
-```text
-tempo_real_s = 0.018000 + 0.120000 * tamanho_total_mb
-```
-
-Nos cenários observados, cada MB adicional está associado a
-aproximadamente `0,12 s` a mais no tempo previsto. Como este é um
-modelo simples, essa associação não isola os efeitos das demais
-variáveis do experimento.
-
-Um modelo linear é apenas uma aproximação. Dependendo dos preditores
-escolhidos, ele pode produzir uma previsão negativa para algum cenário;
-isso não significa tempo negativo, mas evidencia uma limitação do
-modelo para aquela combinação de variáveis.
-
-Repita para os outros preditores:
+Escolha inicialmente uma variável resposta e gere os gráficos de
+dispersão e a matriz de correlação de Pearson. Por exemplo, para
+explorar o tempo real:
 
 ```bash
-python3 scripts/analisar_regressao.py resultados/experimento.csv --preditores quantidade_arquivos
-python3 scripts/analisar_regressao.py resultados/experimento.csv --preditores repetitividade_pct
+python3 scripts/explorar_dados.py resultados/experimento.csv --resposta tempo_real_s
 ```
 
-Compare os valores de `R2` e os erros, mas não use apenas essas
-métricas: observe também se o sinal dos coeficientes faz sentido para o
-fenômeno estudado. Não compare diretamente a magnitude de coeficientes
-que usam unidades diferentes.
-
-### Exercício 5 — Regressão linear múltipla
-
-Agora escolha **duas** variáveis preditoras. Por exemplo:
+Repita para `tempo_usuario_s` e, caso apresente variação suficiente,
+para `tempo_sistema_s`:
 
 ```bash
-python3 scripts/analisar_regressao.py resultados/experimento.csv --preditores tamanho_total_mb quantidade_arquivos
+python3 scripts/explorar_dados.py resultados/experimento.csv --resposta tempo_usuario_s
+python3 scripts/explorar_dados.py resultados/experimento.csv --resposta tempo_sistema_s
 ```
 
-Experimente outros pares:
+O script cria, em `resultados/exploracao/`:
+
+- um gráfico de dispersão da resposta escolhida contra cada preditor;
+- `matriz_correlacao.svg`, com as correlações entre todas as variáveis;
+- `matriz_correlacao.csv`, para inspeção em uma planilha.
+
+Analise:
+
+1. Há uma relação aproximadamente linear entre a resposta e cada
+   preditor?
+2. Quais preditores têm maior correlação, em valor absoluto, com a
+   resposta escolhida?
+3. Há preditores muito correlacionados entre si? Isso pode indicar
+   multicolinearidade e tornar a interpretação de uma regressão
+   múltipla menos confiável.
+
+Não existe uma variável resposta obrigatória. Escolha a que apresentar
+relações mais úteis para a análise e justifique essa escolha com os
+gráficos e as correlações observadas.
+
+### Exercício 5 — Regressão linear simples
+
+Escolha uma variável resposta e **um preditor indicado pela exploração**.
+Por exemplo, se `quantidade_arquivos` tiver relação linear com
+`tempo_real_s`, execute:
 
 ```bash
-python3 scripts/analisar_regressao.py resultados/experimento.csv --preditores tamanho_total_mb repetitividade_pct
-python3 scripts/analisar_regressao.py resultados/experimento.csv --preditores quantidade_arquivos repetitividade_pct
+python3 scripts/analisar_regressao.py resultados/experimento.csv --resposta tempo_real_s --preditores quantidade_arquivos
 ```
 
+Se os gráficos indicarem que `tamanho_total_mb` explica melhor o tempo
+de usuário, você pode ajustar outro modelo:
+
+```bash
+python3 scripts/analisar_regressao.py resultados/experimento.csv --resposta tempo_usuario_s --preditores tamanho_total_mb
+```
+
+O script informa a equação ajustada, `R2`, `R2 ajustado`, `RMSE`, `MAE`
+e o coeficiente padronizado. Um `R2 ajustado` pode ser menor que `R2`,
+ou até negativo, quando o modelo explica pouco da variação observada.
+
+Em uma regressão simples, interprete o coeficiente como uma associação
+nos cenários observados. Ela não isola os efeitos das demais variáveis
+do experimento.
+
+### Exercício 6 — Regressão linear múltipla
+
+Escolha a mesma resposta e dois preditores que tenham relação com ela,
+mas que não apresentem correlação excessiva entre si. Por exemplo:
+
+```bash
+python3 scripts/analisar_regressao.py resultados/experimento.csv --resposta tempo_usuario_s --preditores tamanho_total_mb repetitividade_pct
+```
+
+Compare o modelo múltiplo com os modelos simples correspondentes.
 Além dos coeficientes na unidade original, a saída mostra coeficientes
-padronizados. Eles permitem comparar a intensidade da associação entre
-preditores com unidades diferentes; não representam causalidade.
+padronizados. Eles ajudam a comparar a intensidade da associação entre
+preditores com unidades diferentes, mas não representam causalidade.
 
 Responda:
 
 - O `R2 ajustado` melhorou ao adicionar o segundo preditor? A melhora
   parece relevante?
-- O erro do modelo (`RMSE` e `MAE`) é pequeno o suficiente para o uso
-  que você imaginou? Explique usando a escala dos tempos medidos.
-- Considerando os coeficientes padronizados e previsões para cenários
-  plausíveis, qual preditor parece ter maior associação com o tempo?
-- Algum coeficiente teve sinal contrário ao que você esperava? Como
-  você explicaria isso?
+- Os erros do modelo (`RMSE` e `MAE`) são pequenos na escala da resposta
+  escolhida?
+- Os preditores escolhidos apresentam multicolinearidade preocupante?
+- Algum coeficiente teve sinal contrário ao esperado? Como isso pode
+  ser explicado?
 
-### Exercício 6 — Visualizar os dados
-
-Copie o conteúdo de `resultados/experimento.csv` e importe no
-[Datawrapper](https://www.datawrapper.de/). Os pontos repetidos de cada
-cenário ajudam a visualizar a variabilidade das medições.
-
-Produza pelo menos dois gráficos:
-
-- gráfico de dispersão de `tamanho_total_mb` versus `tempo_real_s`
-- gráfico de dispersão de `quantidade_arquivos` versus `tempo_real_s`
-
-Como terceiro gráfico opcional, use `repetitividade_pct` no eixo X e
-`tempo_real_s` no eixo Y.
-
-Discuta se as relações observadas visualmente parecem lineares. Um
-modelo linear pode ser útil mesmo quando não explica toda a variação,
-mas suas limitações precisam ser reconhecidas.
+Um modelo linear é apenas uma aproximação. Ele pode produzir uma
+previsão negativa para um tempo; isso não representa um tempo negativo
+real, mas uma limitação do modelo para aquela combinação de variáveis.
 
 ### Exercício 7 — Relatório final
 
 Escreva um relatório curto respondendo:
 
-1. Qual modelo simples apresentou o melhor ajuste? Use `R2`, `RMSE`,
-   `MAE` e a interpretação do coeficiente para justificar.
-2. Qual par de variáveis gerou o melhor modelo múltiplo?
-3. A inclusão do segundo preditor trouxe uma melhora relevante no
-   `R2 ajustado`? Quais evidências sustentam sua resposta?
-4. Compare suas hipóteses iniciais com os resultados obtidos.
-5. O que o modelo não consegue explicar? Cite possíveis fontes de
-   variabilidade que ficaram fora dos preditores escolhidos.
-6. Em quais situações reais um modelo como esse poderia ajudar a tomar
-   decisões sobre desempenho?
+1. Qual variável resposta você escolheu e por quê?
+2. O que os gráficos de dispersão e as correlações de Pearson mostraram?
+3. Qual modelo simples apresentou o melhor ajuste?
+4. Qual modelo múltiplo você testou? Os preditores escolhidos tinham
+   correlação forte entre si?
+5. A inclusão do segundo preditor trouxe uma melhora relevante no
+   `R2 ajustado`?
+6. Quais limitações e fontes de variabilidade permanecem fora do modelo?
 
 ## Como encerrar o laboratório
 
@@ -258,6 +246,3 @@ Escreva um relatório curto respondendo:
 exit
 docker compose down
 ```
-
-Os dados em `dados/` e os resultados em `resultados/` permanecem na
-pasta do laboratório após encerrar o container.

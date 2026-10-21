@@ -10,6 +10,12 @@ PREDITORES_VALIDOS = [
     "repetitividade_pct",
 ]
 
+RESPOSTAS_VALIDAS = [
+    "tempo_real_s",
+    "tempo_usuario_s",
+    "tempo_sistema_s",
+]
+
 
 def resolver_sistema(matriz, vetor):
     tamanho = len(vetor)
@@ -36,9 +42,9 @@ def resolver_sistema(matriz, vetor):
     return [linha[-1] for linha in aumentada]
 
 
-def ajustar_ols(observacoes, preditores):
+def ajustar_ols(observacoes, resposta, preditores):
     x = [[1.0] + [linha[preditor] for preditor in preditores] for linha in observacoes]
-    y = [linha["tempo_real_s"] for linha in observacoes]
+    y = [linha[resposta] for linha in observacoes]
     colunas = len(x[0])
 
     xtx = [
@@ -71,10 +77,10 @@ def desvio_padrao(valores):
     return math.sqrt(sum((valor - media) ** 2 for valor in valores) / (len(valores) - 1))
 
 
-def carregar_observacoes(caminho, preditores):
+def carregar_observacoes(caminho, resposta, preditores):
     with open(caminho, newline="", encoding="utf-8") as arquivo:
         leitor = csv.DictReader(arquivo)
-        obrigatorias = {"cenario", "tempo_real_s", *preditores}
+        obrigatorias = {"cenario", resposta, *preditores}
         if not leitor.fieldnames or not obrigatorias.issubset(leitor.fieldnames):
             raise ValueError("O CSV nao possui as colunas necessarias para esta analise.")
 
@@ -82,7 +88,7 @@ def carregar_observacoes(caminho, preditores):
         for linha in leitor:
             try:
                 cenario = linha["cenario"].strip()
-                valores = {chave: float(linha[chave]) for chave in ["tempo_real_s", *preditores]}
+                valores = {chave: float(linha[chave]) for chave in [resposta, *preditores]}
             except (KeyError, TypeError, ValueError) as error:
                 raise ValueError("O CSV contem uma linha com valores invalidos.") from error
             if not cenario:
@@ -91,33 +97,33 @@ def carregar_observacoes(caminho, preditores):
             if cenario not in cenarios:
                 cenarios[cenario] = {
                     "preditores": {preditor: valores[preditor] for preditor in preditores},
-                    "tempos": [],
+                    "respostas": [],
                 }
             elif any(
                 cenarios[cenario]["preditores"][preditor] != valores[preditor]
                 for preditor in preditores
             ):
                 raise ValueError("Um mesmo cenario possui valores conflitantes de preditores.")
-            cenarios[cenario]["tempos"].append(valores["tempo_real_s"])
+            cenarios[cenario]["respostas"].append(valores[resposta])
 
     observacoes = []
     for cenario, valores in cenarios.items():
-        tempos = valores["tempos"]
+        respostas = valores["respostas"]
         observacoes.append({
             "cenario": cenario,
             **valores["preditores"],
-            "tempo_real_s": sum(tempos) / len(tempos),
-            "repeticoes": len(tempos),
+            resposta: sum(respostas) / len(respostas),
+            "repeticoes": len(respostas),
         })
     return observacoes
 
 
-def imprimir_modelo(coeficientes, preditores):
+def imprimir_modelo(coeficientes, resposta, preditores):
     termos = [f"{coeficientes[0]:.6f}"]
     for coeficiente, preditor in zip(coeficientes[1:], preditores):
         sinal = "+" if coeficiente >= 0 else "-"
         termos.append(f"{sinal} {abs(coeficiente):.6f} * {preditor}")
-    print("tempo_real_s = " + " ".join(termos))
+    print(f"{resposta} = " + " ".join(termos))
 
 
 def main():
@@ -125,6 +131,12 @@ def main():
         description="Ajusta uma regressao linear simples ou multipla para os resultados do Lab 03."
     )
     parser.add_argument("csv", help="Arquivo experimento.csv gerado pelo laboratorio.")
+    parser.add_argument(
+        "--resposta",
+        required=True,
+        choices=RESPOSTAS_VALIDAS,
+        help="Variavel de resposta que o modelo deve prever.",
+    )
     parser.add_argument(
         "--preditores",
         nargs="+",
@@ -140,11 +152,11 @@ def main():
         parser.error("Cada preditor deve ser informado apenas uma vez.")
 
     try:
-        observacoes = carregar_observacoes(args.csv, args.preditores)
+        observacoes = carregar_observacoes(args.csv, args.resposta, args.preditores)
         if len(observacoes) < len(args.preditores) + 2:
             raise ValueError("Ha observacoes insuficientes para ajustar este modelo.")
         coeficientes, r2, r2_ajustado, rmse, mae, betas_padronizados, estimados = ajustar_ols(
-            observacoes, args.preditores
+            observacoes, args.resposta, args.preditores
         )
     except (OSError, ValueError) as error:
         raise SystemExit(f"Erro: {error}") from error
@@ -152,10 +164,11 @@ def main():
     tipo = "simples" if len(args.preditores) == 1 else "multipla"
     print(f"Regressao linear {tipo}")
     print(f"Cenarios medios analisados: {len(observacoes)}")
+    print(f"Variavel resposta: {args.resposta}")
     print(f"Preditores: {', '.join(args.preditores)}")
     print("")
     print("Modelo ajustado")
-    imprimir_modelo(coeficientes, args.preditores)
+    imprimir_modelo(coeficientes, args.resposta, args.preditores)
     print("")
     print("Qualidade do ajuste")
     print(f"R2: {r2:.4f}")
@@ -168,9 +181,9 @@ def main():
         print(f"{preditor}: {beta:.4f}")
     print("")
     print("Primeiras previsoes")
-    print("cenario,repeticoes,observado_medio_s,previsto_s,residuo_s")
+    print(f"cenario,repeticoes,observado_medio_{args.resposta},previsto_{args.resposta},residuo_{args.resposta}")
     for observacao, previsto in list(zip(observacoes, estimados))[:10]:
-        observado = observacao["tempo_real_s"]
+        observado = observacao[args.resposta]
         print(
             f"{observacao['cenario']},{observacao['repeticoes']},{observado:.6f},"
             f"{previsto:.6f},{observado - previsto:.6f}"
