@@ -31,15 +31,15 @@ medir() {
   local repeticao="$5"
   local origem="$DADOS/cenarios/$cenario"
   local saida="$ARQUIVOS/${cenario}_rep${repeticao}.tar.gz"
-  local tempo
-  local inicio_ns
-  local fim_ns
+  local metricas
   local tempo_real
+  local tempo_usuario
+  local tempo_sistema
+  local memoria
   local tamanho_original
   local tamanho_comprimido
   local taxa
 
-  tempo="$(mktemp)"
   rm -f "$saida"
   tamanho_original="$(python3 - <<PY
 from pathlib import Path
@@ -48,16 +48,8 @@ print(sum(arquivo.stat().st_size for arquivo in origem.iterdir() if arquivo.is_f
 PY
 )"
 
-  inicio_ns="$(date +%s%N)"
-  /usr/bin/time -f "%U,%S,%M" -o "$tempo" \
-    tar -czf "$saida" -C "$(dirname "$origem")" "$(basename "$origem")"
-  fim_ns="$(date +%s%N)"
-  tempo_real="$(python3 - <<PY
-inicio = $inicio_ns
-fim = $fim_ns
-print(f"{(fim - inicio) / 1_000_000_000:.9f}")
-PY
-)"
+  metricas="$(python3 scripts/medir_compressao.py "$origem" "$saida")"
+  IFS=, read -r tempo_real tempo_usuario tempo_sistema memoria <<< "$metricas"
 
   tamanho_comprimido="$(python3 - <<PY
 from pathlib import Path
@@ -71,8 +63,7 @@ print(f"{comprimido / original:.6f}")
 PY
 )"
 
-  echo "$cenario,$tamanho_mb,$quantidade,$repetitividade,$repeticao,$tempo_real,$(cat "$tempo"),$tamanho_comprimido,$taxa" >> "$CSV"
-  rm -f "$tempo"
+  echo "$cenario,$tamanho_mb,$quantidade,$repetitividade,$repeticao,$tempo_real,$tempo_usuario,$tempo_sistema,$memoria,$tamanho_comprimido,$taxa" >> "$CSV"
 }
 
 while IFS=, read -r cenario tamanho_mb quantidade repetitividade; do
