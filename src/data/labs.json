@@ -329,6 +329,31 @@
             "url": "https://github.com/Daviddevlinux/labdock/releases/download/v1.0-avd2026-2-lab03/avd2026-2-lab-03.zip"
           },
           "readme": "/labs/avd-2026-2/lab-03-regressao-linear-desempenho/README.md"
+        },
+        {
+          "slug": "lab-04-paralelismo-escalabilidade-primos",
+          "nome": "Lab 04 — Paralelismo e Escalabilidade na Busca de Primos",
+          "objetivo": "Investigue como o número de threads e o tamanho da carga afetam o tempo de execução e a utilização de CPU em um programa paralelo.",
+          "descricao": "Execute um benchmark Java que divide a busca por números primos entre várias threads. Varie primeiro o número de threads e depois o limite da busca, compare tempo e utilização de CPU e discuta desempenho, sobrecarga e escalabilidade.",
+          "nivel": "Intermediário",
+          "duracao": "90 min",
+          "ferramentas": ["Ubuntu 24.04", "Java (OpenJDK)", "bash", "Docker"],
+          "objetivos": [
+            "Medir o impacto do número de threads no tempo de execução e na utilização de CPU",
+            "Analisar o efeito do aumento da carga de trabalho no desempenho",
+            "Identificar ganhos de paralelismo e limites causados por sobrecarga ou recursos disponíveis",
+            "Discutir escalabilidade considerando a máquina e o ambiente de execução"
+          ],
+          "professor": {
+            "nome": "Profa. Raquel Vigolvino Lopes",
+            "departamento": "Departamento de Ciências Exatas (DCX) · UFPB",
+            "iniciais": "RVL"
+          },
+          "download": {
+            "arquivo": "avd2026-2-lab-04.zip",
+            "url": "https://github.com/Daviddevlinux/labdock/releases/download/avd2026-2-lab-04/avd2026-2-lab-04.zip"
+          },
+          "readme": "/labs/avd-2026-2/lab-04-paralelismo-escalabilidade-primos/README.md"
         }
       ]
     }
