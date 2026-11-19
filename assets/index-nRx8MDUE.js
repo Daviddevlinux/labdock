@@ -1518,62 +1518,48 @@ intervalo é dividido e como as contagens parciais são combinadas.
 
 ### Exercício 2 — Efeito do número de threads
 
-Mantenha \`numero_maximo\` fixo em 110000 e varie o número de threads.
-Inclua 1 thread, valores intermediários e pelo menos um valor próximo ou
-acima de \`nproc\`. Ajuste a lista do exemplo à quantidade de processadores
-disponível no seu container. O programa aceita até \`numero_maximo\`
-threads, embora usar tantas threads não seja uma escolha recomendada.
+Mantenha \`numero_maximo\` fixo em 1000000 (ou outro valor grande que você desejar) e varie o número de threads.
+Inclua 1 thread, valores intermediários, inclua o valor de \`nproc\` e também valores acima de \`nproc\`. Ajuste a lista do exemplo à quantidade de processadores disponível no seu container. O programa aceita até \`numero_maximo\`
+threads, embora usar tantas threads não seja uma escolha recomendada. Escolha um valor de repetições a serem executadas de cada cenário (ideal é 30). No exemplo abaixo estão configuradas 5 repetições de cada experimento.
 
 \`\`\`bash
-./scripts/executar_experimentos.sh 1,2,4,8 110000 5 resultados/threads.csv
+./scripts/executar_experimentos.sh 1,2,4,8 1000000 5 resultados/threads.csv
 \`\`\`
 
-O programa faz uma rodada de aquecimento e as repetições na mesma JVM
-para cada configuração; somente as repetições entram no CSV. Cada
-medição cria o conjunto de threads dentro do intervalo cronometrado.
-No arquivo \`threads.csv\`, agrupe as linhas por \`threads\` e calcule a média
-de \`tempo_ms\` e \`utilizacao_cpu_pct\`. Faça um gráfico de threads por tempo
-médio e outro de threads por utilização média. Explique por que adicionar
+O programa faz uma rodada de aquecimento e as repetições na mesma JVM para cada configuração; somente as repetições entram no CSV. Cada medição cria o conjunto de threads dentro do intervalo cronometrado.
+No arquivo \`threads.csv\`, agrupe as linhas por \`threads\` e calcule a média de \`tempo_ms\` e \`utilizacao_cpu_pct\`. Faça um gráfico de threads por tempo médio e outro de threads por utilização média. Explique por que adicionar
 threads pode deixar de trazer ganhos ou até aumentar o tempo.
 
 ### Exercício 3 — Efeito do tamanho da carga
 
-Escolha uma quantidade de threads a partir dos resultados anteriores e
-mantenha-a fixa. Varie o limite da busca:
+Escolha uma quantidade de threads a partir dos resultados anteriores e mantenha-a fixa. Varie o limite da busca:
 
 \`\`\`bash
-./scripts/executar_experimentos.sh 4 110000,220000,330000,440000 5 resultados/carga.csv
+./scripts/executar_experimentos.sh 4 1000000,2000000,3000000,4000000 30 resultados/carga.csv
 \`\`\`
 
-No arquivo \`carga.csv\`, agrupe as linhas por \`numero_maximo\` e calcule a
-média de \`tempo_ms\`. Faça um gráfico do limite de busca por tempo médio.
-Discuta se o crescimento observado parece proporcional e quais fatores
+No arquivo \`carga.csv\`, agrupe as linhas por \`numero_maximo\` e calcule a média de \`tempo_ms\`. Faça um gráfico do limite de busca por tempo médio. Discuta se o crescimento observado parece proporcional e quais fatores
 podem explicar diferenças.
+
+Se os valores estiverem muito altos e o experimento demorar muito (mais de 10min) pra rodar, pode alterar os valores. Execute o experimento com uma quantidade grande de repetições de forma que você possa estudar a cauda dos tempos de execução. Em geral, os contratos de nível de serviço falam de tempo médio de resposta (ou execução) e também da cauda desses tempos (que são, por exemplo, os temos de resposta no percentil 90, 95 ou 99).
 
 ### Exercício 4 — Relatório
 
-Use tabelas ou gráficos construídos a partir dos CSVs para responder.
-Apresente também a dispersão entre as repetições (por exemplo, mínimo e
-máximo), para não interpretar apenas as médias:
+No relatório você tem que contextualizar bem os experimentos que executou, por que escolheu os valores que escolheu, justificar quantidade de repetições, justificar a decisão pela quantidade de threads a ser usada no segundo experimento.
 
-1. Como o número de threads afetou o tempo e a utilização de CPU?
+Use tabelas e gráficos construídos a partir dos dados nos arquivos CSVs para responder questões interessantes (algumas listadas abaixo mas pode acrescentar outras). Apresente também os intervalos de confiança da média de suas métricas para a comparação adequada; faça um estudo da cauda do tempo de execução e veja se existe algum modelo de regressão limear que possa prever o tempo de execução com base no número de threads e no número usado para encontrar primos menores que ele. 
+
+1. Como o número de threads afetou o tempo de execução e a utilização de CPU?
 2. Qual configuração de threads foi mais adequada nesta máquina? Por quê?
-3. O resultado seria necessariamente igual em outra máquina ou com
-   outro limite de recursos no container?
+3. O resultado seria necessariamente igual em outra máquina ou com outro limite de recursos no container?
 4. Como o aumento de \`numero_maximo\` afetou o tempo de execução?
-5. O programa apresentou escalabilidade nos valores medidos? Justifique
-   e discuta custos de criação/sincronização das threads e limites de CPU.
+5. O programa apresentou escalabilidade nos valores medidos? Justifique e discuta custos de criação/sincronização das threads e limites de CPU.
+6. Qual o tempo de resposta dos 5% das execuções mais lentas de cada cenário?
 
 ## Sobre as medições
 
-O valor 110000 acompanha o exemplo da prática, mas a busca pode terminar
-rápido demais para comparar configurações em algumas máquinas. Nesse
-caso, use limites maiores e registre os valores utilizados. Para cada
-configuração, o programa faz uma execução de aquecimento na mesma JVM,
-descarta essa medição e grava as repetições seguintes. Outros processos,
-limites do Docker e diferenças de hardware também podem alterar os
-resultados. Compare medições feitas no mesmo ambiente e interprete a
-utilização de CPU junto com o tempo.
+O valor 1000000 acompanha o exemplo da prática, mas a busca pode terminar rápido demais para comparar configurações em algumas máquinas. Nesse caso, use limites maiores e registre os valores utilizados. Para cada
+configuração, o programa faz uma execução de aquecimento na mesma JVM, descarta essa medição e grava as repetições seguintes. Outros processos, limites do Docker e diferenças de hardware também podem alterar os resultados. Compare medições feitas no mesmo ambiente e interprete a utilização de CPU junto com o tempo.
 
 ## Encerrar
 
